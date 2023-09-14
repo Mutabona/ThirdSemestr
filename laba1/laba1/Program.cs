@@ -1,8 +1,10 @@
-﻿internal class Program
+﻿using System.Windows.Markup;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
-        var clients = new List<BankClient>();
+        var clients = BankClient.BankClientController.instance;
         int choice = 0;
         do {
             Console.WriteLine("1 - Add client");
@@ -13,101 +15,74 @@
 
             switch (choice) {
                 case 1:
-                    clients.Add(new BankClient());
+                    clients.AddClient();
                     break;
                 case 2:
-                    foreach (var client in clients) {
-                        client.PrintClient();
-                    }
+                    clients.PrintAllClients();
                     break;
                 case 3:
+                    clients.ProcessAllClients();
                     break;
             }
         } while(choice != 0);
     }
 }
 
-internal class BankClient {
-    private static int lastId = 0;
+internal sealed class BankClient
+{
     private readonly int id;
-
     private string surname;
-    public string Surname { 
-        get { return surname; } 
-        set {
-            try { surname = value; }
-            catch {
-                Console.WriteLine("Surname error");
-                return;
-            }       
-        } 
+    public string? Surname
+    {
+        get => surname;
+        private set => surname = value ?? "";
     }
 
     private string name;
-    public string Name {
-        get { return name; }
-        set {
-            try { name = value; }
-            catch {
-                Console.WriteLine("Name error");
-                return;
-            }
-        }
+    public string? Name
+    {
+        get => name;
+        private set => name = value ?? "";
     }
 
     private string patronomic;
-    public string Patronomic {
-        get { return patronomic; }
-        set {
-            try { patronomic = value; }
-            catch {
-                Console.WriteLine("Patronomic error");
-                return;
-            }
-        }
+    public string? Patronomic
+    {
+        get => patronomic;
+        private set => patronomic = value ?? "";
     }
 
     private string city;
-    public string City {
-        get { return city; }
-        set {
-            try { city = value; }
-            catch {
-                Console.WriteLine("City error");
-                return;
-            }
-        }
+    public string? City
+    {
+        get => city;
+        private set => city = value ?? "";
     }
 
     private string street;
-    public string Street {
-        get { return street; }
-        set {
-            try { street = value; } 
-            catch {
-                Console.WriteLine("Street error");
-                return;
-            }
-        }
+    public string? Street
+    {
+        get => street;
+        private set => street = value ?? "";
     }
 
-    private int house { get; set;}
+    public int house { get; private set; }
+    public int flat { get; private set; }
 
-    private int flat { get; set;}
-
-    public BankClient() {
-        lastId++;
-        this.id = lastId;
-        Console.Write("Surname: "); this.Surname = Console.ReadLine();
-        Console.Write("Name: "); this.Name = Console.ReadLine();
-        Console.Write("Patronomic: "); this.Patronomic = Console.ReadLine();
-        Console.Write("City: "); this.City = Console.ReadLine();
-        Console.Write("Street: "); this.Street = Console.ReadLine();
-        Console.Write("House: "); this.house = Convert.ToInt32(Console.ReadLine());
-        Console.Write("Flat: "); this.flat = Convert.ToInt32(Console.ReadLine());
+    private BankClient(int Id)
+    {
+        id = Id;
+        Console.Write("Surname: "); Surname = Console.ReadLine();
+        Console.Write("Name: "); Name = Console.ReadLine();
+        Console.Write("Patronomic: "); Patronomic = Console.ReadLine();
+        Console.Write("City: "); City = Console.ReadLine();
+        Console.Write("Street: "); Street = Console.ReadLine();
+        Console.Write("House: "); house = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Flat: "); flat = Convert.ToInt32(Console.ReadLine());
     }
 
-    public void PrintClient() {
+    private void PrintClient()
+    {
         Console.WriteLine("Id: " + id.ToString());
         Console.WriteLine("Surname: " + surname);
         Console.WriteLine("Name: " + name);
@@ -117,22 +92,32 @@ internal class BankClient {
         Console.WriteLine("House: " + house.ToString());
         Console.WriteLine("Flat: " + flat.ToString());
     }
-}
 
-public class BankClientFactory {
-    private List<BankClient> clients = new List<BankClient>;
-    private BankClientFactory() {}
-    private static BankClientFactory instance;
-    public static BankClientFactory Instance {
-        get {
-            if (instance == null) {
-                instance = new BankClientFactory();
-            }
-            return instance;;
+    internal sealed class BankClientController
+    {
+        private static int lastId = 0;
+        private List<BankClient> clients = new List<BankClient>();
+        private BankClientController() {}
+        public static readonly BankClientController instance = new BankClientController();
+
+        public void AddClient()
+        {
+            lastId++;
+            clients.Add(new BankClient(lastId));
         }
-    }
 
-    public void AddClient() {
-        clients.Add(new BankClient());
+        public void PrintAllClients() {
+            foreach (var client in clients) {
+                client.PrintClient();
+            }
+        }
+
+        public void ProcessAllClients() {
+            foreach (var client in clients)
+                if (client.house == client.flat)
+                    Console.WriteLine(client.Surname + " " + client.Name);
+                else
+                    Console.WriteLine("They don't match");
+        }
     }
 }

@@ -66,8 +66,8 @@ internal sealed class BankClient
         private set => street = value ?? "";
     }
 
-    public int house { get; private set; }
-    public int flat { get; private set; }
+    public int House { get; private set; }
+    public int Flat { get; private set; }
 
     private BankClient(int Id)
     {
@@ -77,8 +77,8 @@ internal sealed class BankClient
         Console.Write("Patronomic: "); Patronomic = Console.ReadLine();
         Console.Write("City: "); City = Console.ReadLine();
         Console.Write("Street: "); Street = Console.ReadLine();
-        Console.Write("House: "); house = Convert.ToInt32(Console.ReadLine());
-        Console.Write("Flat: "); flat = Convert.ToInt32(Console.ReadLine());
+        Console.Write("House: "); House = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Flat: "); Flat = Convert.ToInt32(Console.ReadLine());
     }
 
     private void PrintClient()
@@ -89,8 +89,8 @@ internal sealed class BankClient
         Console.WriteLine("Patronomice " + patronomic);
         Console.WriteLine("City: " + city);
         Console.WriteLine("Street: " + street);
-        Console.WriteLine("House: " + house.ToString());
-        Console.WriteLine("Flat: " + flat.ToString());
+        Console.WriteLine("House: " + House.ToString());
+        Console.WriteLine("Flat: " + Flat.ToString());
     }
 
     internal sealed class BankClientController
@@ -114,7 +114,7 @@ internal sealed class BankClient
 
         public void ProcessAllClients() {
             foreach (var client in clients)
-                if (client.house == client.flat)
+                if (client.House == client.Flat)
                     Console.WriteLine(client.Surname + " " + client.Name);
                 else
                     Console.WriteLine("They don't match");

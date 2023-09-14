@@ -1,0 +1,14 @@
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.AssemblyInfoInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.AssemblyInfo.cs
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.csproj.CoreCompileInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\bin\Debug\net7.0\laba1struct.exe
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\bin\Debug\net7.0\laba1struct.deps.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\bin\Debug\net7.0\laba1struct.runtimeconfig.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\bin\Debug\net7.0\laba1struct.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\bin\Debug\net7.0\laba1struct.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\refint\laba1struct.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\laba1struct.genruntimeconfig.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\laba1\laba1struct\obj\Debug\net7.0\ref\laba1struct.dll

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\laba1\\laba1struct\\laba1struct.csproj",
+      "projectUniqueName": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba1\\laba1struct\\laba1struct.csproj",
       "projectName": "laba1struct",
-      "projectPath": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\laba1\\laba1struct\\laba1struct.csproj",
+      "projectPath": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba1\\laba1struct\\laba1struct.csproj",
       "packagesPath": "C:\\Users\\k_dod\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\laba1\\laba1struct\\obj\\",
+      "outputPath": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba1\\laba1struct\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

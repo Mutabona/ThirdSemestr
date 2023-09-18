@@ -1,0 +1,14 @@
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\bin\Debug\net7.0\laba2.exe
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\bin\Debug\net7.0\laba2.deps.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\bin\Debug\net7.0\laba2.runtimeconfig.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\bin\Debug\net7.0\laba2.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\bin\Debug\net7.0\laba2.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.AssemblyInfoInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.AssemblyInfo.cs
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.csproj.CoreCompileInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\refint\laba2.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\laba2.genruntimeconfig.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba2\obj\Debug\net7.0\ref\laba2.dll

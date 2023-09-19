@@ -12,6 +12,6 @@
         
         ((Stopwatch)clocks[0]).PrintTime();
         ((MechanicalClock)clocks[1]).PrintTime();
-        ((Clock)clocks[1]).PrintTime();
+        (clocks[1]).PrintTime();
     }
 }

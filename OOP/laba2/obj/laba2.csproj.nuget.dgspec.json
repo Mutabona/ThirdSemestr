@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj": {}
+    "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj": {
+    "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj",
+        "projectUniqueName": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj",
         "projectName": "laba2",
-        "projectPath": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj",
+        "projectPath": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\laba2.csproj",
         "packagesPath": "C:\\Users\\k_dod\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\obj\\",
+        "outputPath": "c:\\Users\\k_dod\\source\\repos\\Mutabona\\ThirdSemestr\\OOP\\laba2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

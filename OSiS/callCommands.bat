@@ -2,4 +2,4 @@
 (call createFolders.bat
 call createFile.bat
 call copyFile.cmd
-call mergeFiles.bat KOLYA )>>%0.log
+call mergeFiles.bat %1 )>>%0.log

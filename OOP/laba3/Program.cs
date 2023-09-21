@@ -1,13 +1,16 @@
-﻿internal class Program
+﻿using System.IO.Compression;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
-        var clocks = new List<Clock>();
 
-        clocks.Add(new Stopwatch());
+        using (Clock clock = new Stopwatch()) {
+            clock.PrintTime();
+        }
 
-        clocks[0].PrintTime();
-        clocks[0].Dispose();
-        clocks[0].PrintTime();
+        using (Clock clock = new MechanicalClock()) {
+            clock.PrintTime();
+        }
     }
 }

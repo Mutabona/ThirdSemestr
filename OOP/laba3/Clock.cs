@@ -1,5 +1,5 @@
 internal abstract class Clock: IDisposable {
-    private string owner;
+    private string? owner;
     public string? Owner {
         get => owner;
         private set => owner = value ?? "Unnamed";
@@ -11,8 +11,9 @@ internal abstract class Clock: IDisposable {
 
     public abstract void PrintTime();
 
-    public void Dispose() {
-        Console.WriteLine("Disposing object");
-        GC.SuppressFinalize(this);
+    ~Clock() {
+        Console.WriteLine("Finalizing clock");
     }
+
+    public abstract void Dispose();
 }

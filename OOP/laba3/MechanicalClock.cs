@@ -16,4 +16,13 @@ internal class MechanicalClock : Clock {
     {
         Console.WriteLine("Mechanical clock: " + DateTime.Now.Minute.ToString());
     }
+
+    ~MechanicalClock() {
+        Console.WriteLine("Finalizing mechanical clock");
+    }
+
+    public override void Dispose() {
+        Console.WriteLine("Disposing mechanical clock");
+        GC.SuppressFinalize(this);
+    }
 }

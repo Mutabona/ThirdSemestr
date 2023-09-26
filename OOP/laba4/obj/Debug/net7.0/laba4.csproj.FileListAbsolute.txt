@@ -13,3 +13,17 @@ C:\Users\kodo2\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\ref
 C:\Users\kodo2\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.pdb
 C:\Users\kodo2\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.genruntimeconfig.cache
 C:\Users\kodo2\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\ref\laba4.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\bin\Debug\net7.0\laba4.exe
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\bin\Debug\net7.0\laba4.deps.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\bin\Debug\net7.0\laba4.runtimeconfig.json
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\bin\Debug\net7.0\laba4.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\bin\Debug\net7.0\laba4.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.AssemblyInfoInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.AssemblyInfo.cs
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.csproj.CoreCompileInputs.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\refint\laba4.dll
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.pdb
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\laba4.genruntimeconfig.cache
+C:\Users\k_dod\source\repos\Mutabona\ThirdSemestr\OOP\laba4\obj\Debug\net7.0\ref\laba4.dll

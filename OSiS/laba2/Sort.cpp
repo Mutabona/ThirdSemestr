@@ -95,10 +95,12 @@ int main()
 
     float avgTime = (float)((((t2.wHour-t1.wHour)*60 + t2.wMinute-t1.wMinute)*60 + t2.wSecond-t1.wSecond)*1000 + t2.wMilliseconds - t1.wMilliseconds)/100;
 
-    wprintf(L"Среднее время одной сортировки: %.3f\n", avgTime);
+    wprintf(L"Среднее время одной сортировки: %.3f ms\n", avgTime);
 
     SYSTEMTIME tend;
     GetSystemTime(&tend);
 
     wprintf(L"Время окончания программы: %02d:%02d:%003d\n", tend.wMinute, tend.wSecond, tend.wMilliseconds);
+
+    Sleep(2000);
 }

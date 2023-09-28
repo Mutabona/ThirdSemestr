@@ -39,5 +39,5 @@ int main()
 
     wprintf(L"Время окончания программы: %02d:%02d:%003d\n", tend.wMinute, tend.wSecond, tend.wMilliseconds);
 
-    Sleep(1200);
+    Sleep(4000);
 }

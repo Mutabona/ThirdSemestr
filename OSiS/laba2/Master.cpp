@@ -18,8 +18,8 @@ int main(int argc, TCHAR *argv[]) {
     PROCESS_INFORMATION pinfo[2];
 
     for (int i = 0; i <= 2; i++) {
-        pinfo[0] = createProcess(argc, argv, i, priorities[i*2]);
-        pinfo[1] = createProcess(argc, argv, i, priorities[i*2+1]);
+        pinfo[0] = createProcess(argc, argv, 1, priorities[i*2]);
+        pinfo[1] = createProcess(argc, argv, 2, priorities[i*2+1]);
         WaitForSingleObject(pinfo[0].hProcess, INFINITE);
         WaitForSingleObject(pinfo[1].hProcess, INFINITE);
     }

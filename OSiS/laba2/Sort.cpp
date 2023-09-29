@@ -6,6 +6,7 @@
 #include <clocale>
 #include "Array.cpp"
 
+const int N = 5000;
 
 int main()
 { 
@@ -20,7 +21,7 @@ int main()
     SYSTEMTIME t1;
     GetSystemTime(&t1);
 
-    Array array(5000);
+    Array array(N);
 
     for (int i = 0; i < 100; i++) {
         array.fill();
@@ -39,5 +40,5 @@ int main()
 
     wprintf(L"Время окончания программы: %02d:%02d:%003d\n", tend.wMinute, tend.wSecond, tend.wMilliseconds);
 
-    Sleep(4000);
+    Sleep(3000);
 }

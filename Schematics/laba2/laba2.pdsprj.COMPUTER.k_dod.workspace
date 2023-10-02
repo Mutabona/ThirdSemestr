@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff1a0100001b000000e60d000055080000</PLACEMENT>
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff1a0100001b000000e60d000055080000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
@@ -21,21 +21,23 @@
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>
      <ITEM name="Name Column Width">81</ITEM>
+     <ITEM name="Previous Value Column Width">0</ITEM>
      <ITEM name="ShowAddresses">Yes</ITEM>
      <ITEM name="ShowPreviousValues">No</ITEM>
      <ITEM name="ShowTypes">No</ITEM>
      <ITEM name="ShowWatchPoint">Yes</ITEM>
      <ITEM name="TriggerMode">0</ITEM>
+     <ITEM name="Type Column Width">0</ITEM>
      <ITEM name="Value Column Width">81</ITEM>
      <ITEM name="Version">100</ITEM>
      <ITEM name="Watch Expression Column Width">81</ITEM>
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="695" x="2667" flags="00000001" y="1158" h="464" pid="0" iid="2">
+   <POPUP w="695" x="500" flags="00000001" y="843" h="464" pid="0" iid="2">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="695" x="786" flags="00008001" y="1468" h="464" pid="0" iid="24">
+   <POPUP w="695" x="578" flags="00008001" y="330" h="464" pid="0" iid="24">
     <PROPERTIES/>
    </POPUP>
   </PWI>

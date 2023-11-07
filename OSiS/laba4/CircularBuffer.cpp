@@ -19,15 +19,23 @@ class CircularBuffer {
     }
 
     void put(int number) {
-        WaitForSingleObject(semaphore, INFINITE);      
+        WaitForSingleObject(semaphore, INFINITE);
+        HANDLE mtx = CreateMutex(NULL, TRUE, _T("input"));
+        WaitForSingleObject(mtx, INFINITE);      
         buffer[tail] = number;
         tail = (tail+1) % size;
+        ReleaseMutex(mtx);
+        CloseHandle(mtx);
     }
 
     int get() {
         while(!ReleaseSemaphore(semaphore, 1, NULL)) {}
+        HANDLE mtx = CreateMutex(NULL, TRUE, _T("output"));
+        WaitForSingleObject(mtx, INFINITE); 
         int number = buffer[head];
         head = (head+1) % size;
+        ReleaseMutex(mtx);
+        CloseHandle(mtx);
         return number;
     }
 

@@ -15,17 +15,17 @@ class CircularBuffer {
         size = _size;
         buffer = new int[size];
         head = tail = 0;
-        semaphore = CreateSemaphore(NULL, 0, size, _T("buffer"));
+        semaphore = CreateSemaphore(NULL, size, size, _T("buffer"));
     }
 
     void put(int number) {
-        while(!ReleaseSemaphore(semaphore, 1, NULL)) {}
+        WaitForSingleObject(semaphore, INFINITE);      
         buffer[tail] = number;
         tail = (tail+1) % size;
     }
 
     int get() {
-        WaitForSingleObject(semaphore, INFINITE);
+        while(!ReleaseSemaphore(semaphore, 1, NULL)) {}
         int number = buffer[head];
         head = (head+1) % size;
         return number;

@@ -37,7 +37,7 @@ int main(int argc, TCHAR *argv[]) {
     hThreadArray[0] = CreateThread( 
             NULL,                   // default security attributes
             0,                      // use default stack size  
-            printSequence,       // thread function name
+            createSequence,       // thread function name
             &buffer,          // argument to thread function 
             0,                      // use default creation flags 
             &dwThreadIdArray[0]);   // returns the thread identifier
@@ -45,7 +45,7 @@ int main(int argc, TCHAR *argv[]) {
     hThreadArray[1] = CreateThread( 
             NULL,                   // default security attributes
             0,                      // use default stack size  
-            createSequence,       // thread function name
+            printSequence,       // thread function name
             &buffer,          // argument to thread function 
             0,                      // use default creation flags 
             &dwThreadIdArray[1]);   // returns the thread identifier

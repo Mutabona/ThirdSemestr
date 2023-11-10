@@ -23,7 +23,7 @@ DWORD WINAPI createSequence( LPVOID lpParam ) {
 DWORD WINAPI printSequence( LPVOID lpParam ) {
     CircularBuffer *buffer = (CircularBuffer*)lpParam;
     for (int i = 0; i < N; i++) {
-        printf("%d ", buffer->get(), i);
+        printf("C%d: %d ", buffer->getCount(), buffer->get());
     }
     return 0;
 }
@@ -39,7 +39,7 @@ int main(int argc, TCHAR *argv[]) {
             0,                      // use default stack size  
             createSequence,       // thread function name
             &buffer,          // argument to thread function 
-            0,                      // use default creation flags 
+            CREATE_SUSPENDED,                      // use default creation flags 
             &dwThreadIdArray[0]);   // returns the thread identifier
 
     hThreadArray[1] = CreateThread( 
@@ -47,9 +47,13 @@ int main(int argc, TCHAR *argv[]) {
             0,                      // use default stack size  
             printSequence,       // thread function name
             &buffer,          // argument to thread function 
-            0,                      // use default creation flags 
+            CREATE_SUSPENDED,                      // use default creation flags 
             &dwThreadIdArray[1]);   // returns the thread identifier
 
+    SetThreadPriority(hThreadArray[0], THREAD_PRIORITY_IDLE);
+    SetThreadPriority(hThreadArray[1], THREAD_PRIORITY_TIME_CRITICAL);
+    ResumeThread(hThreadArray[1]);
+    ResumeThread(hThreadArray[0]);
 
     for (int i = 0; i < MAX_THREADS; i++) {
         WaitForSingleObject(hThreadArray[i], INFINITE);

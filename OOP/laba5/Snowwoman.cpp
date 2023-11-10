@@ -9,7 +9,8 @@ class Snowwoman {
     std::string name;
     int age;
 
-    Snowwoman(int _age = 18, int _temperature = -2, std::string _name = "snegurochka"): age(_age), temperature(_temperature), name(_name) {}
+    Snowwoman(const int _age = 18, const int _temperature = -2, const std::string _name = "snegurochka"): age(_age), temperature(_temperature), name(_name) {}
+    Snowwoman(const Snowwoman& sw) {}
 
     void PrintInformation() {
         std::cout<< "My name is " << name <<" and i'm " << age << " years old" << std::endl;

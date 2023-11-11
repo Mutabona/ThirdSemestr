@@ -13,20 +13,20 @@ int main(int argc, TCHAR *argv[]) {
 	SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
-    PROCESS_INFORMATION pinfo[2];
+    PROCESS_INFORMATION pinfo[3];
 
     HANDLE mtx = CreateMutex(NULL, FALSE, _T("console"));
 
-    for (int i = 0; i <= 2; i++) {
+    for (int i = 0; i < 3; i++) {
         pinfo[i] = createProcess(i);
     }
 
-    for (int i = 0; i <= 2; i++) {
+    for (int i = 0; i < 3; i++) {
         WaitForSingleObject(pinfo[i].hProcess, INFINITE);
     }
 
-    ReleaseMutex(mtx);
-    CloseHandle(mtx);
+    //ReleaseMutex(mtx);
+    //CloseHandle(mtx);
 
     exit(0);
 }

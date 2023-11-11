@@ -31,6 +31,17 @@ private:
         qsort(pos+1, end);
     }
 
+    void bubleSort() {
+        for (int i = 0; i < size-1; i++) {
+            for (int j = i; j < size; j++) {
+                if (array[j] < array[j+1]) {
+                    int temp = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = temp; 
+                }
+            }
+        }
+    }
     
 
 public:

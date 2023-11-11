@@ -1,22 +1,12 @@
 #include <stdio.h>
+#include <student.c>
 
-struct student {
-    int number;
-    char group[6];
-    char FIO[30];
-    char birthday[11];
-    int gender;
-    int missedHours;
-    int justifiedHours;
-};
 
 struct Node {
     struct student student;
     struct Node* left;
     struct Node* right;
 };
-
-struct student getStudent() {}
 
 struct Node* addStudent(struct Node* node) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));

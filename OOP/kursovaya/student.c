@@ -8,5 +8,3 @@ struct student {
     int missedHours;
     int justifiedHours;
 };
-
-struct student getStudent() {}

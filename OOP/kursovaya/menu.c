@@ -55,7 +55,8 @@ void showMenu(struct menu *menu, int choice) {
 }
 
 void printItem(struct menu *menu, int item) {
-    wprintf(L"%s", menu->points[item]);
+    _tcprintf(menu->points[item]);
+    //wprintf(menu->points[item]);
 }
 
 void runMenu(struct menu *menu) {

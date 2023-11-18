@@ -25,15 +25,18 @@ struct UI* getUI() {
     for (int i = 0; i < mainMenuPointsAmount; i++) {
         mainMenuPoints[i] = (TCHAR*)malloc(15*sizeof(TCHAR));
     }
-    mainMenuPoints[0] = L"Добавить";
-    mainMenuPoints[1] = L"Убрать";
-    mainMenuPoints[2] = L"Вывести";
-    mainMenuPoints[3] = L"Выход";
+    mainMenuPoints[0] = _T("Добавить");
+    mainMenuPoints[1] = _T("Убрать");
+    mainMenuPoints[2] = _T("Вывести");
+    mainMenuPoints[3] = _T("Kukaracha");
     
 
     void (**mainMenuFunctions)();
-    mainMenuFunctions[0] = (void**)malloc(mainMenuPointsAmount*sizeof(void*));
-    mainMenuFunctions[0] = addStudent; //Вот тут ошибка
+    mainMenuFunctions = malloc(mainMenuPointsAmount*sizeof(void*));
+    mainMenuFunctions[0] = addStudent;
+    mainMenuFunctions[1] = addStudent;
+    mainMenuFunctions[2] = addStudent;
+    mainMenuFunctions[3] = addStudent;
 
     ui->menus[0] = getMenu(
         mainMenuPointsAmount,

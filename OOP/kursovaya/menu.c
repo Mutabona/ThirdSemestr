@@ -11,7 +11,7 @@
 #define resetcolor() printf(ESC "[0m")
 #define set_display_atrib(color) 	printf(ESC "[%dm",color)
 
-struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, TCHAR **_points, void (**_functions)());
+struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)());
 void showMenu(struct menu *menu, int choice);
 void printItem(struct menu *menu, int item);
 void runMenu(struct menu *menu);
@@ -20,11 +20,11 @@ struct menu {
     int choice;
     int pointsAmount;
     COORD start, end;
-    TCHAR **points;
+    WCHAR **points;
     void (**functions)(void);
 };
 
-struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, TCHAR **_points, void (**_functions)()) {
+struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)()) {
     struct menu *menu = (struct menu*)malloc(sizeof(struct menu));
     menu->choice = 0;
     menu->pointsAmount = _pointsAmount;
@@ -55,8 +55,8 @@ void showMenu(struct menu *menu, int choice) {
 }
 
 void printItem(struct menu *menu, int item) {
-    _tcprintf(menu->points[item]);
-    //wprintf(menu->points[item]);
+    //_tprintf(_T("%s"), menu->points[item]);
+    wprintf(menu->points[item]);
 }
 
 void runMenu(struct menu *menu) {

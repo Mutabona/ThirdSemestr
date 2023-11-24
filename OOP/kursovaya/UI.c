@@ -1,17 +1,19 @@
 #include <stdio.h>
-#include <tchar.h>
 #include <locale.h>
 
-#include "menu.c"
-#include "tree.c"
+//#include "menu.c"
+//#include "studentService.c"
+#include "scrollMenu.c"
 
 #define AMOUNT_OF_MENUS 1
+#define AMOUNT_OF_SMENUS 1
 
 struct UI {
     struct menu *menus[AMOUNT_OF_MENUS];
+    struct scrollMenu *scrollMenus[AMOUNT_OF_SMENUS];
 };
 
-struct UI* getUI() {
+struct UI* getUI(struct studentService *studentService) {
     struct UI *ui = (struct UI*)malloc(sizeof(struct UI));
 
     int mainMenuPointsAmount = 4;
@@ -20,15 +22,15 @@ struct UI* getUI() {
     mainMenuStart.X = 2; mainMenuStart.Y = 2;
     mainMenuEnd.X = 2; mainMenuEnd.Y = 17;
 
-    TCHAR **mainMenuPoints;
-    mainMenuPoints = (TCHAR**)malloc(mainMenuPointsAmount*sizeof(TCHAR*));
+    WCHAR **mainMenuPoints;
+    mainMenuPoints = (WCHAR**)malloc(mainMenuPointsAmount*sizeof(WCHAR*));
     for (int i = 0; i < mainMenuPointsAmount; i++) {
-        mainMenuPoints[i] = (TCHAR*)malloc(15*sizeof(TCHAR));
+        mainMenuPoints[i] = (WCHAR*)malloc(15*sizeof(WCHAR));
     }
-    mainMenuPoints[0] = _T("Добавить");
-    mainMenuPoints[1] = _T("Убрать");
-    mainMenuPoints[2] = _T("Вывести");
-    mainMenuPoints[3] = _T("Kukaracha");
+    mainMenuPoints[0] = L"Добавить";
+    mainMenuPoints[1] = L"Убрать";
+    mainMenuPoints[2] = L"Вывести";
+    mainMenuPoints[3] = L"Kukaracha";
     
 
     void (**mainMenuFunctions)();
@@ -46,6 +48,18 @@ struct UI* getUI() {
         mainMenuFunctions
     );
 
+    int scrollMenuPointsAmount = 15;
+
+    COORD scrollMenuStart, scrollMenuEnd;
+    scrollMenuStart.X = 15; scrollMenuStart.Y = 2;
+    scrollMenuEnd.X = 15; scrollMenuEnd.Y = 17;
+
+    ui->scrollMenus[0] = getScrollMenu(studentService,
+                                       scrollMenuPointsAmount,
+                                       scrollMenuStart,
+                                       scrollMenuEnd
+                                       );
+
     return ui;
 }
 
@@ -60,7 +74,6 @@ void runUI(struct UI *ui) {
     for (int i = 0; i < sizeof(ui->menus)/sizeof(struct menu*); i++) {
         showMenu(ui->menus[i], 0);
     } 
-
     runMenu(ui->menus[0]);
 }
 

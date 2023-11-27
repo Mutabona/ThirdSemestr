@@ -3,7 +3,10 @@
         "stdio.h": "c",
         "locale.h": "c",
         "windows.h": "c",
-        "tchar.h": "c"
+        "tchar.h": "c",
+        "student.h": "c",
+        "menu.h": "c",
+        "studentservice.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

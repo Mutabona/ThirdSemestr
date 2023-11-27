@@ -1,28 +1,4 @@
-#include <stdio.h>
-#include <windows.h>
-#include <tchar.h>
-#include <locale.h>
-
-#define ESC "\033"
-#define home() 			printf(ESC "[H") //Move cursor to the indicated row, column (origin at 1,1)
-#define clrscr()		printf(ESC "[2J") //lear the screen, move to (1,1)
-#define gotoxy(x,y)		printf(ESC "[%d;%dH", y, x);
-#define visible_cursor() printf(ESC "[?251");
-#define resetcolor() printf(ESC "[0m")
-#define set_display_atrib(color) 	printf(ESC "[%dm",color)
-
-struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)());
-void showMenu(struct menu *menu, int choice);
-void printItem(struct menu *menu, int item);
-void runMenu(struct menu *menu);
-
-struct menu {
-    int choice;
-    int pointsAmount;
-    COORD start, end;
-    WCHAR **points;
-    void (**functions)(void);
-};
+#include "menu.h"
 
 struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)()) {
     struct menu *menu = (struct menu*)malloc(sizeof(struct menu));
@@ -60,13 +36,13 @@ void printItem(struct menu *menu, int item) {
 }
 
 void runMenu(struct menu *menu) {
-    int iItem = 0; //Отвечает какой пункт меню активен в данный момент
+    int iItem = 0;
     int isEnable = 1;
 
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))
         {
-            keybd_event(VK_UP, 0, KEYEVENTF_KEYUP, 0); //Вверх
+            keybd_event(VK_UP, 0, KEYEVENTF_KEYUP, 0);
             if(iItem > 0)
                 iItem -= 1;
             else
@@ -75,7 +51,7 @@ void runMenu(struct menu *menu) {
         }
         if(GetAsyncKeyState(VK_DOWN))
         {
-            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0); //Вниз
+            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0);
             if(iItem < menu->pointsAmount-1)
                 iItem += 1;
             else
@@ -84,7 +60,7 @@ void runMenu(struct menu *menu) {
         }
         if(GetAsyncKeyState(VK_RETURN))
         {
-            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0); //Enter
+            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0);
             menu->functions[iItem]();
             showMenu(menu, iItem);   
         }

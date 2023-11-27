@@ -1,11 +1,4 @@
-#include "menu.c"
-#include "studentService.c"
-
-struct scrollMenu {
-    struct menu menu;
-    struct student* buffer;
-    int page;
-};
+#include "scrollMenu.h"
 
 struct scrollMenu* getScrollMenu(struct studentService* studentService, int _pointsAmount, COORD _start, COORD _end) {
     struct scrollMenu *smenu = (struct scrollMenu*)malloc(sizeof(struct scrollMenu));
@@ -15,71 +8,77 @@ struct scrollMenu* getScrollMenu(struct studentService* studentService, int _poi
     smenu->menu.pointsAmount = _pointsAmount;
     smenu->menu.start = _start;
     smenu->menu.end = _end;
+
+    smenu->menu.points = (WCHAR**)malloc(smenu->menu.pointsAmount*sizeof(WCHAR*));
+    for (int i = 0; i < smenu->menu.pointsAmount; i++) {
+        smenu->menu.points[i] = (WCHAR*)malloc(15*sizeof(WCHAR));
+    }
+
     updateScrollMenu(smenu);
 
     return smenu;
 }
 
 void updateScrollMenu(struct scrollMenu* smenu) {
-    int start = smenu->page*smenu->menu.pointsAmount;
+    int start = smenu->page * smenu->menu.pointsAmount;
     for(int i = start; i < start + smenu->menu.pointsAmount; i++) {
         smenu->menu.points[i] = studentToString(smenu->buffer[i]);
     }
     //smenu->menu.functions = _functions;
 }
 
-void showMenu(struct menu *menu, int choice) {   
+void showScrollMenu(struct scrollMenu *smenu, int choice) {   
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    int x = menu->start.X;
-    int y = menu->start.Y;
-    for (int i = 0; i < menu->pointsAmount; i++) {
+    int x = smenu->menu.start.X;
+    int y = smenu->menu.start.Y;
+    for (int i = 0; i < smenu->menu.pointsAmount; i++) {
         gotoxy(x, y++);
         if (i == choice) {
             SetConsoleTextAttribute(hConsole, 5);
             wprintf(L"> ");
-            printItem(menu, i);
+            printScrollItem(smenu, i);
             SetConsoleTextAttribute(hConsole, 1);
         }
         else {
             wprintf(L"  ");
-            printItem(menu, i);
+            printScrollItem(smenu, i);
         }
     }
 }
 
-void printItem(struct menu *menu, int item) {
+void printScrollItem(struct scrollMenu *smenu, int item) {
     //_tprintf(_T("%s"), menu->points[item]);
-    wprintf(menu->points[item]);
+    wprintf(smenu->menu.points[item]);
 }
 
-void runScrollMenu(struct scrollMenu *menu) {
-    int iItem = 0; //ќтвечает какой пункт меню активен в данный момент
+void runScrollMenu(struct scrollMenu *smenu) {
+    int iItem = 0; 
     int isEnable = 1;
 
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))
         {
-            keybd_event(VK_UP, 0, KEYEVENTF_KEYUP, 0); //¬верх
+            keybd_event(VK_UP, 0, KEYEVENTF_KEYUP, 0);
             if(iItem > 0)
                 iItem -= 1;
             else
-                iItem = menu->pointsAmount-1;
-            showMenu(menu, iItem);
+                iItem = smenu->menu.pointsAmount-1;
+            showScrollMenu(smenu, iItem);
         }
         if(GetAsyncKeyState(VK_DOWN))
         {
-            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0); //¬низ
-            if(iItem < menu->pointsAmount-1)
+            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0);
+            if(iItem < smenu->menu.pointsAmount-1)
                 iItem += 1;
             else
                 iItem = 0;
-            showMenu(menu, iItem);
+            showScrollMenu(smenu, iItem);
         }
         if(GetAsyncKeyState(VK_RETURN))
         {
-            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0); //Enter
-            menu->functions[iItem]();
-            showMenu(menu, iItem);   
+            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0);
+            smenu->menu.functions[iItem]();
+            showScrollMenu(smenu, iItem);   
         }
         if(GetAsyncKeyState(VK_ESCAPE)) {
             isEnable = 0;

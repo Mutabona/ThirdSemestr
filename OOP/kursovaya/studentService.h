@@ -8,7 +8,10 @@ struct studentService {
     struct node* studentRepository; 
 };
 
+void addStudent(struct studentService* studentService, struct student student);
 struct student* getAllStudents(struct studentService* studentService);
 struct studentService* getStudentService();
+
+void fillStudentRepository(struct studentService* studentService);
 
 #endif

@@ -25,6 +25,6 @@ struct menu {
 struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)());
 void showMenu(struct menu *menu, int choice);
 void printItem(struct menu *menu, int item);
-void runMenu(struct menu *menu);
+int runMenu(struct menu *menu);
 
 #endif

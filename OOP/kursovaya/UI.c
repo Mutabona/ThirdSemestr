@@ -36,13 +36,21 @@ struct UI* getUI(struct studentService *studentService) {
     );
 
     int scrollMenuPointsAmount = 15;
+    int scrollMenuBufferPointsAmount = studentService->studentsAmount;
 
     COORD scrollMenuStart, scrollMenuEnd;
     scrollMenuStart.X = 15; scrollMenuStart.Y = 2;
     scrollMenuEnd.X = 15; scrollMenuEnd.Y = 17;
 
-    ui->scrollMenus[0] = getScrollMenu(studentService,
+    struct student* buffer = getAllStudents(studentService);
+
+    // for (int i = 0; i < 20; i++) {
+    //     wprintf(L"%d", buffer[i].number);
+    // }
+
+    ui->scrollMenus[0] = getScrollMenu(buffer,
                                        scrollMenuPointsAmount,
+                                       scrollMenuBufferPointsAmount,
                                        scrollMenuStart,
                                        scrollMenuEnd
                                        );
@@ -55,13 +63,17 @@ void runUI(struct UI *ui) {
 	SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
-    system("cls");
+    //system("cls");
 
     //printBorders();
     for (int i = 0; i < sizeof(ui->menus)/sizeof(struct menu*); i++) {
         showMenu(ui->menus[i], 0);
     } 
-    runMenu(ui->menus[0]);
+    while(runMenu(ui->menus[0])) {
+        updateScrollMenu(ui->scrollMenus[0]);
+        showScrollMenu(ui->scrollMenus[0], 0);
+        runScrollMenu(ui->scrollMenus[0]);
+    }
 }
 
 void printBorders() {

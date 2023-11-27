@@ -11,6 +11,7 @@ int main() {
 	SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
     struct studentService *studentService = getStudentService();
+    fillStudentRepository(studentService);
     struct UI *ui = getUI(studentService);
     runUI(ui);
     return 0;

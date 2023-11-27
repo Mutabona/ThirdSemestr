@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "studentService.h"
 
 struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)()) {
     struct menu *menu = (struct menu*)malloc(sizeof(struct menu));
@@ -35,7 +36,7 @@ void printItem(struct menu *menu, int item) {
     wprintf(menu->points[item]);
 }
 
-void runMenu(struct menu *menu) {
+int runMenu(struct menu *menu) {
     int iItem = 0;
     int isEnable = 1;
 
@@ -67,5 +68,10 @@ void runMenu(struct menu *menu) {
         if(GetAsyncKeyState(VK_ESCAPE)) {
             isEnable = 0;
         }
+        if(GetAsyncKeyState(VK_RIGHT)) {
+            return 1;
+        }
     }
+
+    return 0;
 }

@@ -12,8 +12,7 @@ struct node {
     struct node* right;
 };
 
-void addStudent();
 struct node* addNode(struct node* node, struct student student);
-void getStudents(struct node* node, struct student* students, int* i);
+int getStudents(struct node* node, struct student* students, int i);
 
 #endif

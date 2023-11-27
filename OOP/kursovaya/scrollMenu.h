@@ -8,10 +8,11 @@
 struct scrollMenu {
     struct menu menu;
     struct student* buffer;
+    int bufferPointsAmount;
     int page;
 };
 
-struct scrollMenu* getScrollMenu(struct studentService* studentService, int _pointsAmount, COORD _start, COORD _end);
+struct scrollMenu* getScrollMenu(struct student* buffer, int _pointsAmount, int bufferPointsAmount, COORD _start, COORD _end);
 void updateScrollMenu(struct scrollMenu* smenu);
 void showMenu(struct menu *menu, int choice);
 void showScrollMenu(struct scrollMenu *menu, int choice);

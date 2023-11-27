@@ -2,12 +2,13 @@
 #define STUDENT
 
 #include <windows.h>
+#include <stdio.h>
 
 struct student {
     int number;
-    char group[6];
-    char FIO[30];
-    char birthday[11];
+    WCHAR group[6];
+    WCHAR FIO[30];
+    WCHAR birthday[11];
     int gender;
     int missedHours;
     int justifiedHours;

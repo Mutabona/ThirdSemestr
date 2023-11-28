@@ -1,4 +1,5 @@
 #include "scrollMenu.h"
+#include "studentMenu.h"
 
 struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int _bufferPointsAmount, COORD _start, COORD _end) {
     struct scrollMenu *smenu = (struct scrollMenu*)malloc(sizeof(struct scrollMenu));
@@ -9,6 +10,7 @@ struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int
     smenu->menu.pointsAmount = _pointsAmount;
     smenu->menu.start = _start;
     smenu->menu.end = _end;
+    smenu->maxPoints = 15;
 
     smenu->menu.points = (WCHAR**)malloc(smenu->menu.pointsAmount*sizeof(WCHAR*));
     for (int i = 0; i < smenu->menu.pointsAmount; i++) {
@@ -21,45 +23,32 @@ struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int
 }
 
 void updateScrollMenu(struct scrollMenu* smenu) {
-    if (!(smenu->buffer)) return;
-    int start = smenu->page * smenu->menu.pointsAmount;
-    for(int i = 0; i < smenu->menu.pointsAmount && (start + i) < smenu->bufferPointsAmount; i++) {
+    clearMenu(&smenu->menu);
+    int start = smenu->page * smenu->maxPoints;
+    int amountOfElementsOnPage = getAmountOfElementsOnPage(smenu);
+    smenu->menu.pointsAmount = amountOfElementsOnPage;
+    for(int i = 0; i < smenu->menu.pointsAmount; i++) {
         smenu->menu.points[i] = studentToString(smenu->buffer[start+i]);
     }
-    //smenu->menu.functions = _functions;
 }
 
-void showScrollMenu(struct scrollMenu *smenu, int choice) {
-    if (!(smenu->buffer)) return;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    int x = smenu->menu.start.X;
-    int y = smenu->menu.start.Y;
-    int start = smenu->page * smenu->menu.pointsAmount;
-    for (int i = 0; i < smenu->menu.pointsAmount && (start + i) < smenu->bufferPointsAmount; i++) {
-        gotoxy(x, y++);
-        if (i == choice) {
-            SetConsoleTextAttribute(hConsole, 5);
-            wprintf(L"> ");
-            printScrollItem(smenu, i);
-            SetConsoleTextAttribute(hConsole, 1);
-        }
-        else {
-            wprintf(L"  ");
-            printScrollItem(smenu, i);
-        }
+int getAmountOfElementsOnPage(struct scrollMenu *smenu) {
+    int amountOfElementsOnPage;
+    if ((smenu->bufferPointsAmount - smenu->page * smenu->maxPoints)/smenu->maxPoints > 0) {
+        amountOfElementsOnPage = smenu->maxPoints;
     }
+    else {
+        amountOfElementsOnPage = smenu->bufferPointsAmount - smenu->page * smenu->maxPoints;
+    }
+    return amountOfElementsOnPage;
 }
 
-void printScrollItem(struct scrollMenu *smenu, int item) {
-    //_tprintf(_T("%s"), menu->points[item]);
-    wprintf(smenu->menu.points[item]);
-}
-
-void runScrollMenu(struct scrollMenu *smenu) {
-    if (!(smenu->buffer)) return;
+int runScrollMenu(struct scrollMenu *smenu) {
+    updateScrollMenu(smenu);
     int iItem = 0; 
     int isEnable = 1;
-
+    int amountOfElementsOnPage = getAmountOfElementsOnPage(smenu);
+    showMenu(&smenu->menu, 0);
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))
         {
@@ -69,11 +58,12 @@ void runScrollMenu(struct scrollMenu *smenu) {
             else {
                 if (smenu->page > 0) {
                     smenu->page--;
-                    iItem = 0;
+                    iItem = smenu->maxPoints-1;
                     updateScrollMenu(smenu);
+                    amountOfElementsOnPage = getAmountOfElementsOnPage(smenu);
                 }
             }
-            showScrollMenu(smenu, iItem);
+            showMenu(&smenu->menu, iItem);
         }
         if(GetAsyncKeyState(VK_DOWN))
         {
@@ -81,22 +71,35 @@ void runScrollMenu(struct scrollMenu *smenu) {
             if(iItem < smenu->menu.pointsAmount-1)
                 iItem += 1;
             else {
-                if (smenu->page < smenu->bufferPointsAmount/smenu->menu.pointsAmount) {
+                if (smenu->page < smenu->bufferPointsAmount/smenu->maxPoints) {
                     smenu->page++;
                     iItem = 0;
                     updateScrollMenu(smenu);
+                    amountOfElementsOnPage = getAmountOfElementsOnPage(smenu);
                 }
             }
-            showScrollMenu(smenu, iItem);
+            showMenu(&smenu->menu, iItem);
         }
         if(GetAsyncKeyState(VK_RETURN))
         {
-            keybd_event(VK_DOWN, 0, KEYEVENTF_KEYUP, 0);
-            smenu->menu.functions[iItem]();
-            showScrollMenu(smenu, iItem);   
+            keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+            clearMenu(&smenu->menu);
+            return iItem;
         }
-        if(GetAsyncKeyState(VK_ESCAPE)) {
+        if(GetAsyncKeyState(VK_LEFT)) {
+            keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
             isEnable = 0;
+            clearMenu(&smenu->menu);
+            return -1;
+        }
+    }
+}
+
+void clearScrollMenu(struct scrollMenu* scrollMenu) {
+    for (int y = scrollMenu->menu.start.Y; y < scrollMenu->menu.end.Y; y++) {
+        gotoxy(scrollMenu->menu.start.X, y);
+        for (int x = scrollMenu->menu.start.X; x < scrollMenu->menu.end.X; x++) {
+            wprintf(L" ");
         }
     }
 }

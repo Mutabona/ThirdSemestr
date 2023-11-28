@@ -7,17 +7,21 @@
 #include "menu.h"
 #include "studentService.h"
 #include "scrollMenu.h"
+#include "studentMenu.h"
 
 #define AMOUNT_OF_MENUS 1
 #define AMOUNT_OF_SMENUS 1
 
 struct UI {
-    struct menu *menus[AMOUNT_OF_MENUS];
-    struct scrollMenu *scrollMenus[AMOUNT_OF_SMENUS];
+    struct menu *mainMenu;
+    struct scrollMenu *scrollMenu;
 };
 
 struct UI* getUI(struct studentService *studentService);
 void runUI(struct UI *ui);
 void printBorders();
+int initMainMenu(struct UI* ui);
+int initScrollMenu(struct UI* ui);
+int initStudentMenu(struct UI* ui, int item);
 
 #endif

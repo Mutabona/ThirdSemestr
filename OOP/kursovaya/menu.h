@@ -19,12 +19,13 @@ struct menu {
     int pointsAmount;
     COORD start, end;
     WCHAR **points;
-    void (**functions)(void);
 };
 
-struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points, void (**_functions)());
+struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_points);
 void showMenu(struct menu *menu, int choice);
 void printItem(struct menu *menu, int item);
 int runMenu(struct menu *menu);
+void clearMenu(struct menu* menu);
+int runSubMenu(struct menu *menu);
 
 #endif

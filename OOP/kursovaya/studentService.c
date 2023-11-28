@@ -10,7 +10,7 @@ void addStudent(struct studentService* studentService, struct student student) {
 
 struct student* getAllStudents(struct studentService* studentService) {
     if (!studentService->studentRepository) return NULL;
-    wprintf(L"Количество студентов: %d", studentService->studentsAmount);
+    //wprintf(L"Количество студентов: %d", studentService->studentsAmount);
     struct student* students = (struct student*)malloc((studentService->studentsAmount)*sizeof(struct student));
     getStudents(studentService->studentRepository, students, 0);
     // for (int i = 0; i < 20; i++) {
@@ -27,7 +27,7 @@ struct studentService* getStudentService() {
 }
 
 void fillStudentRepository(struct studentService* studentService) {
-    int amount = 20;
+    int amount = 35;
     struct student* students = generateStudents(amount);
     for (int i = 0; i < amount; i++) {
         addStudent(studentService, students[i]);

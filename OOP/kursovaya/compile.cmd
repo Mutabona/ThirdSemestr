@@ -1,1 +1,1 @@
-gcc menu.c scrollMenu.c student.c studentService.c tree.c UI.c program.c -o prg
+gcc menu.c scrollMenu.c student.c studentService.c tree.c UI.c studentMenu.c program.c -o prg

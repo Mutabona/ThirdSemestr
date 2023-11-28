@@ -14,10 +14,6 @@ struct UI* getUI(struct studentService *studentService) {
 
     struct student* buffer = getAllStudents(studentService);
 
-    // for (int i = 0; i < 20; i++) {
-    //     wprintf(L"%d", buffer[i].number);
-    // }
-
     ui->scrollMenu = getScrollMenu(buffer,
                                        scrollMenuPointsAmount,
                                        scrollMenuBufferPointsAmount,
@@ -29,7 +25,7 @@ struct UI* getUI(struct studentService *studentService) {
 
     COORD mainMenuStart, mainMenuEnd;
     mainMenuStart.X = 2; mainMenuStart.Y = 2;
-    mainMenuEnd.X = 100; mainMenuEnd.Y = 17;
+    mainMenuEnd.X = 14; mainMenuEnd.Y = 17;
 
     WCHAR **mainMenuPoints;
     mainMenuPoints = (WCHAR**)malloc(mainMenuPointsAmount*sizeof(WCHAR*));
@@ -47,6 +43,8 @@ struct UI* getUI(struct studentService *studentService) {
         mainMenuEnd,
         mainMenuPoints
     );
+
+    //hidecursor();
 
     return ui;
 }
@@ -87,12 +85,23 @@ int initScrollMenu(struct UI* ui) {
 int initStudentMenu(struct UI* ui, int item) {
     int choice;
     struct scrollMenu* smenu = ui->scrollMenu;
-    while ((choice = runStudentMenu(&smenu->buffer[item+smenu->page*smenu->maxPoints])) != -1) {
-
+    struct studentMenu* studentMenu = getStudentMenu(&smenu->buffer[item+smenu->page*smenu->maxPoints]);
+    showMenu(&studentMenu->menu, item);
+    while ((choice = runSubMenu(&studentMenu->menu)) != -1) {
+        changeStudentMenu(studentMenu, choice);
     }
 }
 
 void printBorders() {
     home();
 	wprintf(L"");
+}
+
+void hidecursor()
+{
+   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+   CONSOLE_CURSOR_INFO info;
+   info.dwSize = 100;
+   info.bVisible = FALSE;
+   SetConsoleCursorInfo(consoleHandle, &info);
 }

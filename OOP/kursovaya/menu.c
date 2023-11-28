@@ -11,7 +11,7 @@ struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_point
     return menu;
 }
 
-void showMenu(struct menu *menu, int choice) {   
+void showMenu(struct menu *menu, int choice) {  
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     int x = menu->start.X;
     int y = menu->start.Y;
@@ -39,6 +39,8 @@ int runMenu(struct menu *menu) {
     int isEnable = 1;
 
     showMenu(menu, iItem);
+
+    //gotoxy(6,2);
 
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))

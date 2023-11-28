@@ -27,7 +27,7 @@ struct studentService* getStudentService() {
 }
 
 void fillStudentRepository(struct studentService* studentService) {
-    int amount = 35;
+    int amount = 5;
     struct student* students = generateStudents(amount);
     for (int i = 0; i < amount; i++) {
         addStudent(studentService, students[i]);

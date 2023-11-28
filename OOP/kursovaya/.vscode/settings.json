@@ -6,7 +6,9 @@
         "tchar.h": "c",
         "student.h": "c",
         "menu.h": "c",
-        "studentservice.h": "c"
+        "studentservice.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

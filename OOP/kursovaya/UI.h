@@ -23,5 +23,6 @@ void printBorders();
 int initMainMenu(struct UI* ui);
 int initScrollMenu(struct UI* ui);
 int initStudentMenu(struct UI* ui, int item);
+void hidecursor();
 
 #endif

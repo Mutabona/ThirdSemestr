@@ -7,12 +7,12 @@
 #include <locale.h>
 
 #define ESC "\033"
-#define home() 			printf(ESC "[H") //Move cursor to the indicated row, column (origin at 1,1)
-#define clrscr()		printf(ESC "[2J") //lear the screen, move to (1,1)
+#define home() 			wprintf(ESC L"[H") //Move cursor to the indicated row, column (origin at 1,1)
+#define clrscr()		wprintf(ESC L"[2J") //lear the screen, move to (1,1)
 #define gotoxy(x,y)		printf(ESC "[%d;%dH", y, x);
-#define visible_cursor() printf(ESC "[?251");
-#define resetcolor() printf(ESC "[0m")
-#define set_display_atrib(color) 	printf(ESC "[%dm",color)
+#define visible_cursor() wprintf(ESC L"[?251");
+#define resetcolor() wprintf(ESC L"[0m")
+#define set_display_atrib(color) 	wprintf(ESC L"[%dm",color)
 
 struct menu {
     int choice;

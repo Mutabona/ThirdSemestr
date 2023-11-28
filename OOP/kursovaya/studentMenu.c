@@ -1,6 +1,6 @@
 #include "studentMenu.h"
 
-struct studentMenu* getStudentMenu(struct student *student) {
+struct studentMenu* getStudentMenu(struct student *_student) {
     struct studentMenu *menu = (struct studentMenu*)malloc(sizeof(struct studentMenu));
     menu->menu.choice = 0;
     menu->menu.pointsAmount = 7;
@@ -10,35 +10,69 @@ struct studentMenu* getStudentMenu(struct student *student) {
     menu->menu.start = start;
     menu->menu.end = end;
 
+    menu->student = _student;
+
     WCHAR **points;
     points = (WCHAR**)malloc(menu->menu.pointsAmount*sizeof(WCHAR*));
     for (int i = 0; i < menu->menu.pointsAmount; i++) {
-        points[i] = (WCHAR*)malloc(128*sizeof(WCHAR));
+        points[i] = (WCHAR*)malloc(50*sizeof(WCHAR));
     }
-    wsprintfW(points[0], L"Номер: %d", student->number);
-    wsprintfW(points[1], L"Группа: %s", student->group);
-    wsprintfW(points[2], L"ФИО: %s", student->FIO);
-    wsprintfW(points[3], L"Дата рождения: %s", student->birthday);
-    wsprintfW(points[4], L"Пол: %d", student->gender);
-    wsprintfW(points[5], L"Пропущено часов: %d", student->missedHours);
-    wsprintfW(points[6], L"Оправдано часов: %d", student->justifiedHours);
-    
-
     menu->menu.points = points;
+    
+    updateStudentMenu(menu);
+    
     return menu;
 }
 
-int runStudentMenu(struct student *student) {
-    int item = 0;
-    struct studentMenu* studentMenu = getStudentMenu(student);
-    showMenu(&studentMenu->menu, item);
-    int choice = runSubMenu(&studentMenu->menu);
-
-    return choice;
+void changeStudentMenu(struct studentMenu* menu, int item) {
+    clearMenu(&menu->menu);
+    switch(item) {
+        case 0:
+            //wsprintfW(menu->menu.points[0], L"Номер: ");
+            break;
+        case 1:
+            wsprintfW(menu->menu.points[1], L"Группа: \n");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR group[6];
+            //Sleep(2000);
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(group);
+                //wprintf(L"Ueban");
+                //Sleep(2000);
+            }
+            wcscpy(menu->student->group, group);
+            updateStudentMenu(menu);
+            showMenu(&menu->menu, 1);
+            break;
+        case 2:
+            wsprintfW(menu->menu.points[2], L"ФИО: ");
+            break;
+        case 3:
+            wsprintfW(menu->menu.points[3], L"Дата рождения: ");
+            break;
+        case 4:
+            wsprintfW(menu->menu.points[4], L"Пол: ");
+            break;
+        case 5:
+            wsprintfW(menu->menu.points[5], L"Пропущено часов: ");
+            break;
+        case 6:
+            wsprintfW(menu->menu.points[6], L"Оправдано часов: ");
+            break;
+    }
 }
 
-void updateStudentMenu(struct studentMenu* studentMenu, int item) {
-    switch(item) {
-        
-    }
+void updateStudentMenu(struct studentMenu* menu) {
+    wsprintfW(menu->menu.points[0], L"Номер:           %d", menu->student->number);
+    wsprintfW(menu->menu.points[1], L"Группа:          %s", menu->student->group);
+    wsprintfW(menu->menu.points[2], L"ФИО:             %s", menu->student->FIO);
+    wsprintfW(menu->menu.points[3], L"Дата рождения:   %s", menu->student->birthday);
+    wsprintfW(menu->menu.points[4], L"Пол:             %d", menu->student->gender);
+    wsprintfW(menu->menu.points[5], L"Пропущено часов: %d", menu->student->missedHours);
+    wsprintfW(menu->menu.points[6], L"Оправдано часов: %d", menu->student->justifiedHours);
+    clearMenu(&menu->menu);
 }

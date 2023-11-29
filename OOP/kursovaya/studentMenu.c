@@ -30,38 +30,95 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
         case 0:
             //wsprintfW(menu->menu.points[0], L"Номер: ");
             break;
+
         case 1:
-            wsprintfW(menu->menu.points[1], L"Группа: \n");
+            wsprintfW(menu->menu.points[1], L"Группа: ");
             clearMenu(&menu->menu);
             showMenu(&menu->menu, item);
             gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
             
             WCHAR group[6];
-            //Sleep(2000);
             while (!GetAsyncKeyState(VK_RETURN)) {
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(group);
-                //wprintf(L"Ueban");
-                //Sleep(2000);
             }
             wcscpy(menu->student->group, group);
             updateStudentMenu(menu);
-            showMenu(&menu->menu, 1);
             break;
+
         case 2:
             wsprintfW(menu->menu.points[2], L"ФИО: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR FIO[30];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(FIO);
+            }
+            wcscpy(menu->student->FIO, FIO);
+            updateStudentMenu(menu);      
             break;
+            
         case 3:
             wsprintfW(menu->menu.points[3], L"Дата рождения: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR birthday[11];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(birthday);
+            }
+            wcscpy(menu->student->birthday, birthday);
+            updateStudentMenu(menu);
             break;
+
         case 4:
             wsprintfW(menu->menu.points[4], L"Пол: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR gender[2];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(gender);
+            }
+            menu->student->gender = _wtoi(gender);
+            updateStudentMenu(menu);
             break;
+
         case 5:
             wsprintfW(menu->menu.points[5], L"Пропущено часов: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR missedHours[10];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(missedHours);
+            }
+            menu->student->missedHours = _wtoi(missedHours);
+            updateStudentMenu(menu);
             break;
+            
         case 6:
             wsprintfW(menu->menu.points[6], L"Оправдано часов: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR justifiedHours[10];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(justifiedHours);
+            }
+            menu->student->justifiedHours = _wtoi(justifiedHours);
+            updateStudentMenu(menu);
             break;
     }
 }

@@ -106,6 +106,7 @@ int runSubMenu(struct menu *menu) {
         }
         if(GetAsyncKeyState(VK_LEFT)) {
             keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
+            clearMenu(menu);
             return -1;
         }
     }

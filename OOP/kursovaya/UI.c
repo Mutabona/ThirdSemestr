@@ -5,6 +5,8 @@
 struct UI* getUI(struct studentService *studentService) {
     struct UI *ui = (struct UI*)malloc(sizeof(struct UI));
 
+    ui->studentService = studentService;
+
     int scrollMenuPointsAmount = 15;
     int scrollMenuBufferPointsAmount = studentService->studentsAmount;
 
@@ -14,12 +16,12 @@ struct UI* getUI(struct studentService *studentService) {
 
     struct student* buffer = getAllStudents(studentService);
 
-    ui->scrollMenu = getScrollMenu(buffer,
-                                       scrollMenuPointsAmount,
-                                       scrollMenuBufferPointsAmount,
-                                       scrollMenuStart,
-                                       scrollMenuEnd
-                                       );
+    ui->scrollMenu = getScrollMenu (buffer,
+                                    scrollMenuPointsAmount,
+                                    scrollMenuBufferPointsAmount,
+                                    scrollMenuStart,
+                                    scrollMenuEnd
+                                    );
 
     int mainMenuPointsAmount = 4;
 
@@ -44,7 +46,7 @@ struct UI* getUI(struct studentService *studentService) {
         mainMenuPoints
     );
 
-    //hidecursor();
+    hidecursor();
 
     return ui;
 }
@@ -66,6 +68,12 @@ int initMainMenu(struct UI* ui) {
     while ((choice = runMenu(ui->mainMenu)) != -1) {
         switch(choice) {
             case 0:
+                {
+                struct student* student = newStudent();
+                initStudentMenu(student);
+                addStudent(ui->studentService, *student);
+                updateScrollBuffer(ui);
+                }
                 break;
             case 2:
                 initScrollMenu(ui);
@@ -74,19 +82,25 @@ int initMainMenu(struct UI* ui) {
     }
 }
 
+void updateScrollBuffer(struct UI* ui) {
+    ui->scrollMenu->buffer = getAllStudents(ui->studentService);
+    ui->scrollMenu->bufferPointsAmount = ui->studentService->studentsAmount;
+}
+
 int initScrollMenu(struct UI* ui) {
     int choice;
     struct scrollMenu* smenu = ui->scrollMenu;
+    
     while ((choice = runScrollMenu(ui->scrollMenu)) != -1) {
-        initStudentMenu(ui, choice);
+        struct student* student = &smenu->buffer[choice+smenu->page*smenu->maxPoints];
+        initStudentMenu(student);
+
     }
 }
 
-int initStudentMenu(struct UI* ui, int item) {
+int initStudentMenu(struct student* student) {
     int choice;
-    struct scrollMenu* smenu = ui->scrollMenu;
-    struct studentMenu* studentMenu = getStudentMenu(&smenu->buffer[item+smenu->page*smenu->maxPoints]);
-    showMenu(&studentMenu->menu, item);
+    struct studentMenu* studentMenu = getStudentMenu(student);
     while ((choice = runSubMenu(&studentMenu->menu)) != -1) {
         changeStudentMenu(studentMenu, choice);
     }

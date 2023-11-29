@@ -13,6 +13,7 @@
 #define AMOUNT_OF_SMENUS 1
 
 struct UI {
+    struct studentService* studentService;
     struct menu *mainMenu;
     struct scrollMenu *scrollMenu;
 };
@@ -22,7 +23,8 @@ void runUI(struct UI *ui);
 void printBorders();
 int initMainMenu(struct UI* ui);
 int initScrollMenu(struct UI* ui);
-int initStudentMenu(struct UI* ui, int item);
+void updateScrollBuffer(struct UI* ui);
+int initStudentMenu(struct student* student);
 void hidecursor();
 
 #endif

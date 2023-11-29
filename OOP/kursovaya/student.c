@@ -6,14 +6,14 @@ WCHAR* studentToString(struct student student) {
     return str;
 }
 
-struct student newStudent() {
-    struct student student;
-    student.number = 0;
-    wsprintfW(student.group, L"");
-    wsprintfW(student.FIO, L"");
-    wsprintfW(student.birthday, L"");
-    student.gender = 0;
-    student.missedHours = 0;
-    student.justifiedHours = 0;
+struct student *newStudent() {
+    struct student* student = (struct student*)malloc(sizeof(struct student));
+    student->number = 0;
+    wsprintfW(student->group, L"");
+    wsprintfW(student->FIO, L"");
+    wsprintfW(student->birthday, L"");
+    student->gender = 0;
+    student->missedHours = 0;
+    student->justifiedHours = 0;
     return student;
 }

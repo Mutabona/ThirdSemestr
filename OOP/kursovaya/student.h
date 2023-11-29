@@ -15,6 +15,6 @@ struct student {
 };
 
 WCHAR* studentToString(struct student student);
-struct student newStudent();
+struct student* newStudent();
 
 #endif

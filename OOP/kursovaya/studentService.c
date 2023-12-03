@@ -10,18 +10,15 @@ void addStudent(struct studentService* studentService, struct student student) {
 
 struct student* getAllStudents(struct studentService* studentService) {
     if (!studentService->studentRepository) return NULL;
-    //wprintf(L"Количество студентов: %d", studentService->studentsAmount);
     struct student* students = (struct student*)malloc((studentService->studentsAmount)*sizeof(struct student));
     getStudents(studentService->studentRepository, students, 0);
-    // for (int i = 0; i < 20; i++) {
-    //     wprintf(L"%d", students[i].number);
-    // }
     return students;
 }
 
 struct studentService* getStudentService() {
     struct studentService* studentService = (struct studentService*)malloc(sizeof(struct studentService));
     studentService->studentsAmount = 0;
+    studentService->lastFoundStudentsAmount = 0;
     studentService->studentRepository = NULL;
     return studentService;
 }
@@ -32,4 +29,35 @@ void fillStudentRepository(struct studentService* studentService) {
     for (int i = 0; i < amount; i++) {
         addStudent(studentService, students[i]);
     }
+}
+
+struct student* getStudentsByFIO(struct studentService* studentService, WCHAR FIO[30]) {
+    if (!studentService->studentRepository) return NULL;
+    struct student* students = (struct student*)malloc(sizeof(struct student));
+    studentService->lastFoundStudentsAmount = getStudentsListByFIO(studentService->studentRepository, students, 0, FIO);
+    return students;
+}
+
+struct student* getStudentByNumber(struct studentService* studentService) {
+
+}
+
+struct student* getStudentsByGroup(struct studentService* studentService) {
+
+}
+
+struct student* getStudentsByBirthday(struct studentService* studentService) {
+
+}
+
+struct student* getStudentsByGender(struct studentService* studentService) {
+
+}
+
+struct student* getStudentsByJustifiedHours(struct studentService* studentService) {
+
+}
+
+struct student* getStudentsByMissedHours(struct studentService* studentService) {
+
 }

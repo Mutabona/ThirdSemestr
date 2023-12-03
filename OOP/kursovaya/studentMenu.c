@@ -5,8 +5,8 @@ struct studentMenu* getStudentMenu(struct student *_student) {
     menu->menu.choice = 0;
     menu->menu.pointsAmount = 7;
     COORD start, end;
-    start.X = 15; start.Y = 2;
-    end.X = 113; end.Y = 17;
+    start.X = 23; start.Y = 2;
+    end.X = 123; end.Y = 12;
     menu->menu.start = start;
     menu->menu.end = end;
 

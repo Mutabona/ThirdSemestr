@@ -40,8 +40,6 @@ int runMenu(struct menu *menu) {
 
     showMenu(menu, iItem);
 
-    //gotoxy(6,2);
-
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))
         {

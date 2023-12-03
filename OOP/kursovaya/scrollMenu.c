@@ -94,12 +94,3 @@ int runScrollMenu(struct scrollMenu *smenu) {
         }
     }
 }
-
-void clearScrollMenu(struct scrollMenu* scrollMenu) {
-    for (int y = scrollMenu->menu.start.Y; y < scrollMenu->menu.end.Y; y++) {
-        gotoxy(scrollMenu->menu.start.X, y);
-        for (int x = scrollMenu->menu.start.X; x < scrollMenu->menu.end.X; x++) {
-            wprintf(L" ");
-        }
-    }
-}

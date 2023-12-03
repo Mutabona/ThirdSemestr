@@ -9,9 +9,6 @@
 #include "scrollMenu.h"
 #include "studentMenu.h"
 
-#define AMOUNT_OF_MENUS 1
-#define AMOUNT_OF_SMENUS 1
-
 struct UI {
     struct studentService* studentService;
     struct menu *mainMenu;
@@ -25,6 +22,7 @@ int initMainMenu(struct UI* ui);
 int initScrollMenu(struct UI* ui);
 void updateScrollBuffer(struct UI* ui);
 int initStudentMenu(struct student* student);
+void findStudent(struct UI* ui);
 void hidecursor();
 
 #endif

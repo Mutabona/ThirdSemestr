@@ -2,7 +2,7 @@
 
 WCHAR* studentToString(struct student student) {
     WCHAR* str = (WCHAR*)malloc(128*sizeof(WCHAR));
-    wsprintfW(str, L"%d %s %s %s %d %d %d", student.number, student.group, student.FIO, student.birthday, student.gender, student.missedHours, student.justifiedHours);
+    wsprintfW(str, L"%5d %6s %30s %11s %1d %4d %4d", student.number, student.group, student.FIO, student.birthday, student.gender, student.missedHours, student.justifiedHours);
     return str;
 }
 

@@ -28,7 +28,19 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
     clearMenu(&menu->menu);
     switch(item) {
         case 0:
-            //wsprintfW(menu->menu.points[0], L"Номер: ");
+            wsprintfW(menu->menu.points[0], L"Номер: ");
+            clearMenu(&menu->menu);
+            showMenu(&menu->menu, item);
+            gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+            
+            WCHAR number[10];
+            while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+                gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
+                _getws(number);
+            }
+            menu->student->number = _wtoi(number);
+            updateStudentMenu(menu);
             break;
 
         case 1:
@@ -39,8 +51,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR group[6];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
-                _getws(group);
+                _getws(group);              
             }
             wcscpy(menu->student->group, group);
             updateStudentMenu(menu);
@@ -54,6 +67,7 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR FIO[30];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(FIO);
             }
@@ -69,6 +83,7 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR birthday[11];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(birthday);
             }
@@ -82,8 +97,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             showMenu(&menu->menu, item);
             gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
             
-            WCHAR gender[2];
+            WCHAR gender[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(gender);
             }
@@ -99,6 +115,7 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR missedHours[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(missedHours);
             }
@@ -114,6 +131,7 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR justifiedHours[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(justifiedHours);
             }
@@ -121,6 +139,7 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             updateStudentMenu(menu);
             break;
     }
+    clearMenu(&menu->menu);
 }
 
 void updateStudentMenu(struct studentMenu* menu) {

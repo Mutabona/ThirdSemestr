@@ -13,6 +13,7 @@ struct UI {
     struct studentService* studentService;
     struct menu *mainMenu;
     struct scrollMenu *scrollMenu;
+    struct menu *fileMenu;
 };
 
 struct UI* getUI(struct studentService *studentService);
@@ -22,7 +23,9 @@ int initMainMenu(struct UI* ui);
 int initScrollMenu(struct UI* ui);
 void updateScrollBuffer(struct UI* ui);
 int initStudentMenu(struct student* student);
-void findStudent(struct UI* ui);
+struct student* findStudent(struct UI* ui);
 void hidecursor();
+char* getFileName(struct UI* ui);
+int initFileMenu(struct UI* ui);
 
 #endif

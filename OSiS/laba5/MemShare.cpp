@@ -10,11 +10,10 @@ TCHAR szName[]=TEXT("memshare");
 
 int main() {
     HANDLE mtx = OpenMutexW(MUTEX_ALL_ACCESS, FALSE, L"memory");
-    printf("Posrt prinyal");
     
     if (mtx) WaitForSingleObject(mtx, INFINITE);
     else {
-        printf("\nya govnoed\n");
+        printf("ne rabotaet\n");
     }
 
     srand ( time(0) );
@@ -45,27 +44,25 @@ int main() {
 
     CopyMemory(sharedMemory, memory, dwSize);
   
-    printf("Posrt sdal");
     ReleaseMutex(mtx);
     CloseHandle(mtx);
 
     Sleep(1000);
 
     mtx = OpenMutexW(MUTEX_ALL_ACCESS, FALSE, L"memory");
-    printf("Posrt prinyal");
     
     if (mtx) WaitForSingleObject(mtx, INFINITE);
     else {
-        printf("\nya govnoed\n");
+        printf("ya obyazatelno sdam\n");
     }
 
     VirtualProtect(memory, dwSize, PAGE_READWRITE, &oldProt);
 
     CopyMemory(memory, sharedMemory, dwSize);
 
-    /*for (int i = 0; i < dwSize/sizeof(short); i++) {
+    for (int i = 0; i < dwSize/sizeof(short); i++) {
         printf("%d ", memory[i]);
-    }*/
+    }
 
     VirtualFree(memory, dwSize, MEM_RELEASE);
     UnmapViewOfFile(sharedMemory);

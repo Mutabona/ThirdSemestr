@@ -1,7 +1,7 @@
 #include "scrollMenu.h"
 #include "studentMenu.h"
 
-struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int _bufferPointsAmount, COORD _start, COORD _end) {
+struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int _bufferPointsAmount, COORD _start, COORD _end, int _printStudentsMode) {
     struct scrollMenu *smenu = (struct scrollMenu*)malloc(sizeof(struct scrollMenu));
     smenu->page = 0;
     smenu->buffer = _buffer;
@@ -11,24 +11,35 @@ struct scrollMenu* getScrollMenu(struct student* _buffer, int _pointsAmount, int
     smenu->menu.start = _start;
     smenu->menu.end = _end;
     smenu->maxPoints = 15;
+    smenu->printStudentsMode = _printStudentsMode;
 
     smenu->menu.points = (WCHAR**)malloc(smenu->menu.pointsAmount*sizeof(WCHAR*));
     for (int i = 0; i < smenu->menu.pointsAmount; i++) {
         smenu->menu.points[i] = (WCHAR*)malloc(128*sizeof(WCHAR));
     }
 
-    updateScrollMenu(smenu);
-
     return smenu;
 }
 
 void updateScrollMenu(struct scrollMenu* smenu) {
     clearMenu(&smenu->menu);
+    if (!smenu->buffer) {
+        smenu->menu.points[0] = L"Нет таких студентов";
+        smenu->menu.pointsAmount = 1;
+        return;
+    }
     int start = smenu->page * smenu->maxPoints;
     int amountOfElementsOnPage = getAmountOfElementsOnPage(smenu);
     smenu->menu.pointsAmount = amountOfElementsOnPage;
-    for(int i = 0; i < smenu->menu.pointsAmount; i++) {
-        smenu->menu.points[i] = studentToString(smenu->buffer[start+i]);
+    if (smenu->printStudentsMode == 0) {
+        for(int i = 0; i < smenu->menu.pointsAmount; i++) {
+            smenu->menu.points[i] = studentToString(smenu->buffer[start+i]);
+        }
+    }
+    else {
+        for(int i = 0; i < smenu->menu.pointsAmount; i++) {
+            smenu->menu.points[i] = studentWithUnjustifiedHoursToString(smenu->buffer[start+i]);
+        }
     }
 }
 

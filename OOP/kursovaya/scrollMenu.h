@@ -11,9 +11,10 @@ struct scrollMenu {
     int bufferPointsAmount;
     int maxPoints;
     int page;
+    int printStudentsMode;
 };
 
-struct scrollMenu* getScrollMenu(struct student* buffer, int _pointsAmount, int bufferPointsAmount, COORD _start, COORD _end);
+struct scrollMenu* getScrollMenu(struct student* buffer, int _pointsAmount, int bufferPointsAmount, COORD _start, COORD _end, int _printStudentsMode);
 void updateScrollMenu(struct scrollMenu* smenu);
 int runScrollMenu(struct scrollMenu *menu);
 int getAmountOfElementsOnPage(struct scrollMenu *smenu);

@@ -36,7 +36,9 @@ void fillStudentRepository(struct studentService* studentService) {
 struct student* getStudentsByFIO(struct studentService* studentService, WCHAR FIO[30]) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByFIO(studentService->studentRepository, students, 0, FIO);
+    int foundStudents = getStudentsListByFIO(studentService->studentRepository, students, 0, FIO);
+    studentService->lastFoundStudentsAmount = foundStudents;   
+    if (!foundStudents) return NULL; 
     return students;
 }
 
@@ -49,35 +51,54 @@ struct student* getStudentByNumber(struct studentService* studentService, int nu
 struct student* getStudentsByGroup(struct studentService* studentService, WCHAR group[6]) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByGroup(studentService->studentRepository, students, 0, group);
+    int foundStudents = getStudentsListByGroup(studentService->studentRepository, students, 0, group);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
     return students;
 }
 
 struct student* getStudentsByBirthday(struct studentService* studentService, WCHAR birthday[11]) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByBirthday(studentService->studentRepository, students, 0, birthday);
+    int foundStudents = getStudentsListByBirthday(studentService->studentRepository, students, 0, birthday);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
     return students;
 }
 
 struct student* getStudentsByGender(struct studentService* studentService, int gender) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByGender(studentService->studentRepository, students, 0, gender);
+    int foundStudents = getStudentsListByGender(studentService->studentRepository, students, 0, gender);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
     return students;
 }
 
 struct student* getStudentsByJustifiedHours(struct studentService* studentService, int justifiedHours) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByJustifiedHours(studentService->studentRepository, students, 0, justifiedHours);
+    int foundStudents = getStudentsListByJustifiedHours(studentService->studentRepository, students, 0, justifiedHours);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
     return students;
 }
 
 struct student* getStudentsByMissedHours(struct studentService* studentService, int missedHours) {
     if (!studentService->studentRepository) return NULL;
     struct student* students = (struct student*)malloc(sizeof(struct student));
-    studentService->lastFoundStudentsAmount = getStudentsListByMissedHours(studentService->studentRepository, students, 0, missedHours);
+    int foundStudents = getStudentsListByMissedHours(studentService->studentRepository, students, 0, missedHours);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
+    return students;
+}
+
+struct student* getStudentsWithUnjustifiedHours(struct studentService* studentService) {
+    if (!studentService->studentRepository) return NULL;
+    struct student* students = (struct student*)malloc(sizeof(struct student));
+    int foundStudents = getStudentsListWithUnjustifiedHours(studentService->studentRepository, students, 0);
+    studentService->lastFoundStudentsAmount = foundStudents;
+    if (!foundStudents) return NULL;
     return students;
 }
 
@@ -92,6 +113,7 @@ void loadStudentsFromFile(struct studentService* studentService, char *filename)
         return;
     }
     int *i = (int*)malloc(sizeof(int));
+    studentService->studentRepository = NULL;
     studentService->studentRepository = loadFromFile(studentService->studentRepository, file, i);
     studentService->studentsAmount=*i;
     studentService->lastId=*i;
@@ -113,6 +135,7 @@ void loadStudentsFromBinaryFile(struct studentService* studentService, char *fil
         return;
     }
     int *i = (int*)malloc(sizeof(int));
+    studentService->studentRepository = NULL;
     studentService->studentRepository = loadFromFile(studentService->studentRepository, file, i);
     studentService->studentsAmount=*i;
     studentService->lastId=*i;
@@ -126,4 +149,28 @@ void saveStudentsToBinaryFile(struct studentService* studentService, char *filen
     }
     saveToFile(studentService->studentRepository, file);
     fclose(file);
+}
+
+void freeStudents(struct studentService* studentService) {
+    freeTree(studentService->studentRepository);
+    free(studentService);
+}
+
+WCHAR* getStats(struct studentService* studentService) {
+    int missedHours = getMissedHours(studentService->studentRepository);
+    int justifiedHours = getJustifiedHours(studentService->studentRepository);
+    float unjustifiedHoursPercent = 0.0;
+    int unjustifiedHours = missedHours - justifiedHours;
+    if (justifiedHours == 0 && missedHours == 0) {
+        unjustifiedHoursPercent = 0;
+    }
+    else if (justifiedHours == 0) {
+        unjustifiedHoursPercent = 100;
+    }
+    else {
+        unjustifiedHoursPercent = (unjustifiedHours * 1.0 / missedHours)*100;
+    }
+    WCHAR* str = (WCHAR*)malloc(150*sizeof(WCHAR));
+    wsprintfW(str, L"Пропущено часов: %d, оправдано часов: %d, неоправдано часов: %d, процент неоправданных пропусков %d", missedHours, justifiedHours, unjustifiedHours, (int)unjustifiedHoursPercent);
+    return str;
 }

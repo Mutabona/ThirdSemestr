@@ -7,30 +7,12 @@ struct UI* getUI(struct studentService *studentService) {
 
     ui->studentService = studentService;
 
-    //Scroll menu
-    int scrollMenuPointsAmount = 15;
-    int scrollMenuBufferPointsAmount = studentService->studentsAmount;
-
-    COORD scrollMenuStart, scrollMenuEnd;
-    scrollMenuStart.X = 23; scrollMenuStart.Y = 2;
-    scrollMenuEnd.X = 123; scrollMenuEnd.Y = scrollMenuStart.Y + scrollMenuPointsAmount;
-
-    struct student* buffer = getAllStudents(studentService);
-
-    ui->scrollMenu = getScrollMenu (buffer,
-                                    scrollMenuPointsAmount,
-                                    scrollMenuBufferPointsAmount,
-                                    scrollMenuStart,
-                                    scrollMenuEnd
-                                    );
-
-
     //Main menu
-    int mainMenuPointsAmount = 9;
+    int mainMenuPointsAmount = 7;
 
     COORD mainMenuStart, mainMenuEnd;
     mainMenuStart.X = 2; mainMenuStart.Y = 2;
-    mainMenuEnd.X = 22; mainMenuEnd.Y = mainMenuStart.Y + mainMenuPointsAmount;
+    mainMenuEnd.X = mainMenuStart.X + 20; mainMenuEnd.Y = mainMenuStart.Y + mainMenuPointsAmount;
 
     WCHAR **mainMenuPoints;
     mainMenuPoints = (WCHAR**)malloc(mainMenuPointsAmount*sizeof(WCHAR*));
@@ -42,10 +24,8 @@ struct UI* getUI(struct studentService *studentService) {
     mainMenuPoints[2] = L"Вывести";
     mainMenuPoints[3] = L"Поиск";
     mainMenuPoints[4] = L"Файлы";
-    mainMenuPoints[5] = L"Первая обработка";
-    mainMenuPoints[6] = L"Вторая обработка";
-    mainMenuPoints[7] = L"Третья обработка";
-    mainMenuPoints[8] = L"Выход";
+    mainMenuPoints[5] = L"Обработка студентов";
+    mainMenuPoints[6] = L"Выход";
 
     ui->mainMenu = getMenu(
         mainMenuPointsAmount,
@@ -53,6 +33,24 @@ struct UI* getUI(struct studentService *studentService) {
         mainMenuEnd,
         mainMenuPoints
     );
+
+    //Scroll menu
+    int scrollMenuPointsAmount = 15;
+    int scrollMenuBufferPointsAmount = studentService->studentsAmount;
+
+    COORD scrollMenuStart, scrollMenuEnd;
+    scrollMenuStart.X = mainMenuEnd.X + 2; scrollMenuStart.Y = 2;
+    scrollMenuEnd.X = scrollMenuStart.X + 100; scrollMenuEnd.Y = scrollMenuStart.Y + scrollMenuPointsAmount;
+
+    struct student* buffer = getAllStudents(studentService);
+
+    ui->scrollMenu = getScrollMenu (buffer,
+                                    scrollMenuPointsAmount,
+                                    scrollMenuBufferPointsAmount,
+                                    scrollMenuStart,
+                                    scrollMenuEnd,
+                                    0
+                                    );
 
     //File menu
     int fileMenuPointsAmount = 4;
@@ -62,7 +60,7 @@ struct UI* getUI(struct studentService *studentService) {
 
     WCHAR **fileMenuPoints;
     fileMenuPoints = (WCHAR**)malloc(fileMenuPointsAmount*sizeof(WCHAR*));
-    for (int i = 0; i < mainMenuPointsAmount; i++) {
+    for (int i = 0; i < fileMenuPointsAmount; i++) {
         fileMenuPoints[i] = (WCHAR*)malloc(15*sizeof(WCHAR));
     }
     fileMenuPoints[0] = L"Сохранить в обычный файл";
@@ -79,21 +77,50 @@ struct UI* getUI(struct studentService *studentService) {
 
     hidecursor();
 
+    //Bad students menu
+    int badStudentsMenuPointsAmount = 15;
+    struct student* badBuffer = getStudentsWithUnjustifiedHours(studentService);
+    int badStudentsMenuBufferPointsAmount = studentService->lastFoundStudentsAmount;
+
+    ui->badStudentsMenu = getScrollMenu (badBuffer,
+                                    badStudentsMenuPointsAmount,
+                                    badStudentsMenuBufferPointsAmount,
+                                    scrollMenuStart,
+                                    scrollMenuEnd,
+                                    1
+                                    );
+
+
     return ui;
 }
 
 void runUI(struct UI *ui) {
-    // SetConsoleCP(1251);
-	// SetConsoleOutputCP(1251);
-    // setlocale(LC_ALL, "Russian");
-
     system("cls");
-    system("doskey /listsize=0");
-
-    //printBorders();
     
     while(initMainMenu(ui) != -1) {}
+    freeUI(ui);
     return;
+}
+
+void freeUI(struct UI *ui) {
+    for(int i = 0; i < ui->mainMenu->pointsAmount; i++) {
+        free(ui->mainMenu->points[i]);
+    }
+    free(ui->mainMenu->points);
+    for(int i = 0; i < ui->scrollMenu->menu.pointsAmount; i++) {
+        free(ui->scrollMenu->menu.points[i]);
+    }
+    free(ui->scrollMenu->menu.points);
+    free(ui->scrollMenu->buffer);
+    for(int i = 0; i < ui->fileMenu->pointsAmount; i++) {
+        free(ui->fileMenu->points[i]);
+    }
+    free(ui->fileMenu->points);
+    for(int i = 0; i < ui->badStudentsMenu->menu.pointsAmount; i++) {
+        free(ui->badStudentsMenu->menu.points[i]);
+    }
+    free(ui->badStudentsMenu->menu.points);
+    free(ui->badStudentsMenu->buffer);
 }
 
 int initMainMenu(struct UI* ui) {
@@ -106,12 +133,12 @@ int initMainMenu(struct UI* ui) {
                 initStudentMenu(student);
                 addStudent(ui->studentService, *student);
                 updateScrollBuffer(ui);
-                free(student);
                 }
                 break;
             case 1:
                 {
                 struct student* students = findStudent(ui);
+                if (!students) break;
                 ui->scrollMenu->buffer = students;
                 ui->scrollMenu->bufferPointsAmount = ui->studentService->lastFoundStudentsAmount;
                 int studentNumber = students[runScrollMenu(ui->scrollMenu)].number;
@@ -121,10 +148,14 @@ int initMainMenu(struct UI* ui) {
                 break;
             case 2:
                 initScrollMenu(ui);
+                updateScrollBuffer(ui);
                 break;
             case 3: 
                 {
                 struct student* students = findStudent(ui);
+                if (!students) {
+                    break;
+                }
                 ui->scrollMenu->buffer = students;
                 ui->scrollMenu->bufferPointsAmount = ui->studentService->lastFoundStudentsAmount;
                 initScrollMenu(ui);
@@ -134,7 +165,12 @@ int initMainMenu(struct UI* ui) {
             case 4:
                 initFileMenu(ui);
                 break;
-            case 8:
+            case 5:
+                updateBadBuffer(ui);
+                initBadStudentsMenu(ui);
+                updateScrollBuffer(ui);
+                break;
+            case 6:
                 return -1;
         }
     }
@@ -144,6 +180,7 @@ struct student* findStudent(struct UI* ui) {
     struct student* student = newStudent();
     struct studentMenu* studentMenu = getStudentMenu(student);
     int choice = runSubMenu(&studentMenu->menu);
+    if (choice == -1) return NULL;
     changeStudentMenu(studentMenu, choice);
     struct student* students;
     switch (choice) {
@@ -177,14 +214,34 @@ void updateScrollBuffer(struct UI* ui) {
     ui->scrollMenu->bufferPointsAmount = ui->studentService->studentsAmount;
 }
 
+void updateBadBuffer(struct UI* ui) {
+    ui->badStudentsMenu->buffer = getStudentsWithUnjustifiedHours(ui->studentService);
+    ui->badStudentsMenu->bufferPointsAmount = ui->studentService->lastFoundStudentsAmount;
+}
+
 int initScrollMenu(struct UI* ui) {
     int choice;
     struct scrollMenu* smenu = ui->scrollMenu;
     
-    while ((choice = runScrollMenu(ui->scrollMenu)) != -1) {
+    while ((choice = runScrollMenu(smenu)) != -1) {
+        struct student* student = &smenu->buffer[choice+smenu->page*smenu->maxPoints];
+        initStudentMenu(student);
+        struct student* stud = getStudentByNumber(ui->studentService, student->number);
+        *stud = *student;
+    }
+}
+
+int initBadStudentsMenu(struct UI* ui) {
+    int choice;
+    struct scrollMenu* smenu = ui->badStudentsMenu;
+    gotoxy(ui->mainMenu->start.X + 2, smenu->menu.end.Y);
+    wprintf(getStats(ui->studentService));
+    
+    while ((choice = runScrollMenu(smenu)) != -1) {
         struct student* student = &smenu->buffer[choice+smenu->page*smenu->maxPoints];
         initStudentMenu(student);
     }
+    system("cls");
 }
 
 int initStudentMenu(struct student* student) {
@@ -198,26 +255,37 @@ int initStudentMenu(struct student* student) {
 int initFileMenu(struct UI* ui) {
     int choice;
     choice = runSubMenu(ui->fileMenu);
-    char *fileName = getFileName(ui);
     switch (choice) {
         case 0:
+        {
+            char *fileName = getFileName(ui);
             sprintf(fileName, "%s.txt", fileName);
             saveStudentsToFile(ui->studentService, fileName);
             break;
+        }
         case 1:
+        {
+            char *fileName = getFileName(ui);
             sprintf(fileName, "%s.dat", fileName);
             saveStudentsToBinaryFile(ui->studentService, fileName);
             break;
+        }
         case 2:
+        {
+            char *fileName = getFileName(ui);
             sprintf(fileName, "%s.txt", fileName);
             loadStudentsFromFile(ui->studentService, fileName);
             updateScrollBuffer(ui);
             break;
+        }
         case 3:
+        {
+            char *fileName = getFileName(ui);
             sprintf(fileName, "%s.dat", fileName);
             loadStudentsFromBinaryFile(ui->studentService, fileName);
             updateScrollBuffer(ui);
             break;
+        }
     }
     clearMenu(ui->fileMenu);
 }
@@ -232,12 +300,8 @@ char* getFileName(struct UI* ui) {
         gotoxy(ui->scrollMenu->menu.start.X + 18, ui->scrollMenu->menu.start.Y);
         gets(fileName);
     }
+    Sleep(500);
     return fileName;
-}
-
-void printBorders() {
-    home();
-	wprintf(L"");
 }
 
 void hidecursor()

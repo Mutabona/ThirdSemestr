@@ -178,6 +178,17 @@ int getStudentsListByMissedHours(struct node* node, struct student* students, in
     return i;
 }
 
+int getStudentsListWithUnjustifiedHours(struct node* node, struct student* students, int i) {
+    if (!node) return i;
+    i = getStudentsListWithUnjustifiedHours(node->left, students, i);
+    if (node->student.missedHours > node->student.justifiedHours) {
+        students = (struct student*)realloc(students, sizeof(struct student)*(i+1));
+        students[i++] = node->student;
+    }
+    i = getStudentsListWithUnjustifiedHours(node->right, students, i);
+    return i;
+}
+
 void saveToFile(struct node* node, FILE* file) {
     if (!node) return;
     fwrite(node, sizeof(struct node), 1, file);
@@ -189,14 +200,32 @@ struct node* loadFromFile(struct node* node, FILE* file, int *i) {
     if (!feof(file)) {
         node = (struct node*)malloc(sizeof(struct node));
         fread(node, sizeof(struct node), 1, file);
-        (*i)++;
         if (node->left)
             node->left = loadFromFile(node->left, file, i);
+        node->student.number = *i;
+        (*i)++;
         if (node->right)
-            node->right = loadFromFile(node->right, file, i);
+            node->right = loadFromFile(node->right, file, i);       
     }
     else {
         return NULL;
     }
     return node;
+}
+
+void freeTree(struct node* node) {
+    if(!node) return;
+    freeTree(node->left);
+    freeTree(node->right);
+    free(node);
+}
+
+int getJustifiedHours(struct node* node) {
+    if (!node) return 0;
+    return getJustifiedHours(node->left) + getJustifiedHours(node->right) + node->student.justifiedHours;
+}
+
+int getMissedHours(struct node* node) {
+    if (!node) return 0;
+    return getMissedHours(node->left) + getMissedHours(node->right) + node->student.missedHours;
 }

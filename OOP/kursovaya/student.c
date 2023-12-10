@@ -6,6 +6,12 @@ WCHAR* studentToString(struct student student) {
     return str;
 }
 
+WCHAR* studentWithUnjustifiedHoursToString(struct student student) {
+    WCHAR* str = (WCHAR*)malloc(128*sizeof(WCHAR));
+    wsprintfW(str, L"%5d %6s %30s, Неоправдано часов: %4d", student.number, student.group, student.FIO, student.missedHours - student.justifiedHours);
+    return str;
+}
+
 struct student *newStudent() {
     struct student* student = (struct student*)malloc(sizeof(struct student));
     student->number = 0;

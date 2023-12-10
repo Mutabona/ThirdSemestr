@@ -31,7 +31,11 @@ int getStudentsListByGender(struct node* node, struct student* students, int i, 
 int getStudentsListByBirthday(struct node* node, struct student* students, int i, WCHAR birthday[11]);
 int getStudentsListByJustifiedHours(struct node* node, struct student* students, int i, int justifiedHours);
 int getStudentsListByMissedHours(struct node* node, struct student* students, int i, int missedHours);
+int getStudentsListWithUnjustifiedHours(struct node* node, struct student* students, int i);
 void saveToFile(struct node* node, FILE* file);
 struct node* loadFromFile(struct node* node, FILE* file, int *i);
+void freeTree(struct node* node);
+int getJustifiedHours(struct node* node);
+int getMissedHours(struct node* node);
 
 #endif

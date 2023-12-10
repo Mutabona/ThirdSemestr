@@ -38,9 +38,9 @@ int main() {
 
     if (!sharedMemory) printf("\n! sharedMemory\n");
 
-    for (int i = 0; i < dwSize/sizeof(char); i++) {
+    for (int i = 0; i < dwSize/sizeof(char)-2; i++) {
         printf("\n! nihuya ne rabotaet\n");
-        for (int j = i; j < dwSize/sizeof(char); j++) {
+        for (int j = i; j < dwSize/sizeof(char)-1; j++) {
             if (sharedMemory[j] < sharedMemory[j+1]) {
                 short temp = sharedMemory[j+1];
                 sharedMemory[j+1] = sharedMemory[j];

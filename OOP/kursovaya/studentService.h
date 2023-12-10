@@ -21,10 +21,13 @@ struct student* getStudentsByBirthday(struct studentService* studentService, WCH
 struct student* getStudentsByGender(struct studentService* studentService, int gender);
 struct student* getStudentsByJustifiedHours(struct studentService* studentService, int justifiedHours);
 struct student* getStudentsByMissedHours(struct studentService* studentService, int missedHours);
+struct student* getStudentsWithUnjustifiedHours(struct studentService* studentService);
 void loadStudentsFromFile(struct studentService* studentService, char *filename);
 void saveStudentsToFile(struct studentService* studentService, char *filename);
 void loadStudentsFromBinaryFile(struct studentService* studentService, char *filename);
 void saveStudentsToBinaryFile(struct studentService* studentService, char *filename);
+void freeStudents(struct studentService* studentService);
+WCHAR* getStats(struct studentService* studentService);
 
 void fillStudentRepository(struct studentService* studentService);
 

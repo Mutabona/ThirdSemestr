@@ -9,14 +9,12 @@ SIZE_T dwSize = 4096;
 TCHAR szName[]=TEXT("memshare");
 
 int main() {
-    printf("Hochu post");
     HANDLE mtx = OpenMutexW(MUTEX_ALL_ACCESS, FALSE, L"memory");   
     if (mtx) WaitForSingleObject(mtx, INFINITE);
     else {
-        printf("\nya daun\n");
+        printf("no work\n");
     }
 
-    printf("Posrt poluchil");
 
     HANDLE hMapFile;
     short* sharedMemory;
@@ -38,6 +36,7 @@ int main() {
 
     if (!sharedMemory) printf("\n! sharedMemory\n");
 
+<<<<<<< HEAD
     for (int i = 0; i < dwSize/sizeof(char)-2; i++) {
         printf("\n! nihuya ne rabotaet\n");
         for (int j = i; j < dwSize/sizeof(char)-1; j++) {
@@ -48,13 +47,23 @@ int main() {
             }
         }
     }
+=======
+    int i, key, j;
+    for (i = 1; i < dwSize/sizeof(short); i++) {
+        key = sharedMemory[i];
+        j = i - 1;
+>>>>>>> e6dee780dacdd0922d6610e1beefa51959d15457
 
-    printf("\n Sorted \n");
+        while (j >= 0 && sharedMemory[j] > key) {
+            sharedMemory[j + 1] = sharedMemory[j];
+            j = j - 1;
+        }
+        sharedMemory[j + 1] = key;
+    }
 
     UnmapViewOfFile(sharedMemory);
     CloseHandle(hMapFile);
 
-    printf("Posrt vernul");
     ReleaseMutex(mtx);   
     CloseHandle(mtx);
 }

@@ -240,6 +240,8 @@ int initBadStudentsMenu(struct UI* ui) {
     while ((choice = runScrollMenu(smenu)) != -1) {
         struct student* student = &smenu->buffer[choice+smenu->page*smenu->maxPoints];
         initStudentMenu(student);
+        struct student* stud = getStudentByNumber(ui->studentService, student->number);
+        *stud = *student;
     }
     system("cls");
 }

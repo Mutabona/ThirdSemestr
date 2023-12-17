@@ -82,7 +82,7 @@ int runScrollMenu(struct scrollMenu *smenu) {
             if(iItem < smenu->menu.pointsAmount-1)
                 iItem += 1;
             else {
-                if (smenu->page < smenu->bufferPointsAmount/smenu->maxPoints) {
+                if (smenu->page < (smenu->bufferPointsAmount-1)/smenu->maxPoints) {
                     smenu->page++;
                     iItem = 0;
                     updateScrollMenu(smenu);

@@ -234,7 +234,7 @@ int initScrollMenu(struct UI* ui) {
 int initBadStudentsMenu(struct UI* ui) {
     int choice;
     struct scrollMenu* smenu = ui->badStudentsMenu;
-    gotoxy(ui->mainMenu->start.X + 2, smenu->menu.end.Y);
+    gotoxy(smenu->menu.start.X, smenu->menu.end.Y + 2);
     wprintf(getStats(ui->studentService));
     
     while ((choice = runScrollMenu(smenu)) != -1) {

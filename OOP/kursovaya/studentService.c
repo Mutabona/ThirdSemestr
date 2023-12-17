@@ -26,7 +26,7 @@ struct studentService* getStudentService() {
 }
 
 void fillStudentRepository(struct studentService* studentService) {
-    int amount = 5;
+    int amount = 18;
     struct student* students = generateStudents(amount);
     for (int i = 0; i < amount; i++) {
         addStudent(studentService, students[i]);
@@ -170,7 +170,7 @@ WCHAR* getStats(struct studentService* studentService) {
     else {
         unjustifiedHoursPercent = (unjustifiedHours * 1.0 / missedHours)*100;
     }
-    WCHAR* str = (WCHAR*)malloc(150*sizeof(WCHAR));
+    WCHAR* str = (WCHAR*)malloc(120*sizeof(WCHAR));
     wsprintfW(str, L"Пропущено часов: %d, оправдано часов: %d, неоправдано часов: %d, процент неоправданных пропусков %d", missedHours, justifiedHours, unjustifiedHours, (int)unjustifiedHoursPercent);
     return str;
 }

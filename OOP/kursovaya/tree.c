@@ -7,7 +7,6 @@ struct node* addNode(struct node* node, struct student student) {
         node->height = 1;
         node->right = NULL;
         node->left = NULL;
-        printf("Student number %d loaded\n", node->student.number);
         return node;
     }
     else if (student.number < node->student.number) {

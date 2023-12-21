@@ -1,14 +1,14 @@
 #include "student.h"
 
 WCHAR* studentToString(struct student student) {
-    WCHAR* str = (WCHAR*)malloc(128*sizeof(WCHAR));
-    wsprintfW(str, L"%5d %6s %30s %11s %1d %4d %4d", student.number, student.group, student.FIO, student.birthday, student.gender, student.missedHours, student.justifiedHours);
+    WCHAR* str = (WCHAR*)malloc(256*sizeof(WCHAR));
+    wsprintfW(str, L"%6d|%7s|%31s|%11s|%4d|%10d|%10d", student.number, student.group, student.FIO, student.birthday, student.gender, student.missedHours, student.justifiedHours);
     return str;
 }
 
 WCHAR* studentWithUnjustifiedHoursToString(struct student student) {
-    WCHAR* str = (WCHAR*)malloc(128*sizeof(WCHAR));
-    wsprintfW(str, L"%5d %6s %30s, Неоправдано часов: %4d", student.number, student.group, student.FIO, student.missedHours - student.justifiedHours);
+    WCHAR* str = (WCHAR*)malloc(256*sizeof(WCHAR));
+    wsprintfW(str, L"%6d|%7s|%31s|%20d", student.number, student.group, student.FIO, student.missedHours - student.justifiedHours);
     return str;
 }
 

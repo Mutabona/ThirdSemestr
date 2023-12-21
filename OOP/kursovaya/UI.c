@@ -41,8 +41,8 @@ struct UI* getUI(struct studentService *studentService) {
     int scrollMenuBufferPointsAmount = studentService->studentsAmount;
 
     COORD scrollMenuStart, scrollMenuEnd;
-    scrollMenuStart.X = mainMenuEnd.X + 2; scrollMenuStart.Y = 2;
-    scrollMenuEnd.X = scrollMenuStart.X + 100; scrollMenuEnd.Y = scrollMenuStart.Y + scrollMenuPointsAmount;
+    scrollMenuStart.X = mainMenuEnd.X + 3; scrollMenuStart.Y = 4;
+    scrollMenuEnd.X = scrollMenuStart.X + 87; scrollMenuEnd.Y = scrollMenuStart.Y + scrollMenuPointsAmount;
 
     struct student* buffer = getAllStudents(studentService);
     printf("Scroll menu buffer filled\n");
@@ -60,8 +60,12 @@ struct UI* getUI(struct studentService *studentService) {
     //File menu
     int fileMenuPointsAmount = 4;
 
-    COORD fileMenuStart = scrollMenuStart;
-    COORD fileMenuEnd = scrollMenuEnd;
+    COORD fileMenuStart;
+    fileMenuStart.X = scrollMenuStart.X;
+    fileMenuStart.Y = mainMenuStart.Y;
+    COORD fileMenuEnd;
+    fileMenuEnd.X = fileMenuStart.X + 29;
+    fileMenuEnd.Y = fileMenuStart.Y + fileMenuPointsAmount;
 
     WCHAR **fileMenuPoints;
     fileMenuPoints = (WCHAR**)malloc(fileMenuPointsAmount*sizeof(WCHAR*));
@@ -87,11 +91,16 @@ struct UI* getUI(struct studentService *studentService) {
     int badStudentsMenuBufferPointsAmount = studentService->lastFoundStudentsAmount;
     printf("Bad students menu buffer filled\n");
 
+    COORD badStudentsMenuStart = scrollMenuStart;
+    COORD badStudentsMenuEnd;
+    badStudentsMenuEnd.X = scrollMenuStart.X + 68;
+    badStudentsMenuEnd.Y = scrollMenuEnd.Y;
+
     ui->badStudentsMenu = getScrollMenu (badBuffer,
                                     scrollMenuPointsAmount,
                                     badStudentsMenuBufferPointsAmount,
-                                    scrollMenuStart,
-                                    scrollMenuEnd,
+                                    badStudentsMenuStart,
+                                    badStudentsMenuEnd,
                                     1
                                     );
 
@@ -145,9 +154,7 @@ int initMainMenu(struct UI* ui) {
                 {
                 struct student* students = findStudent(ui);
                 if (!students) {
-                    ui->scrollMenu->buffer = NULL;
-                    ui->scrollMenu->bufferPointsAmount = 0;
-                    runScrollMenu(ui->scrollMenu);
+                    break;
                 } else {
                     ui->scrollMenu->buffer = students;
                     ui->scrollMenu->bufferPointsAmount = ui->studentService->lastFoundStudentsAmount;
@@ -165,9 +172,6 @@ int initMainMenu(struct UI* ui) {
                 {
                 struct student* students = findStudent(ui);
                 if (!students) {
-                    ui->scrollMenu->buffer = NULL;
-                    ui->scrollMenu->bufferPointsAmount = 0;
-                    runScrollMenu(ui->scrollMenu);
                     break;
                 }
                 ui->scrollMenu->buffer = students;
@@ -241,6 +245,7 @@ int initScrollMenu(struct UI* ui) {
         struct student* stud = getStudentByNumber(ui->studentService, student->number);
         *stud = *student;
     }
+    system("cls");
 }
 
 int initScrollMenuForSearch(struct UI* ui) {

@@ -46,9 +46,11 @@ int getAmountOfElementsOnPage(struct scrollMenu *smenu) {
     int amountOfElementsOnPage;
     if ((smenu->bufferPointsAmount - smenu->page * smenu->maxPoints)/smenu->maxPoints > 0) {
         amountOfElementsOnPage = smenu->maxPoints;
+        smenu->menu->end.Y = smenu->menu->start.Y + amountOfElementsOnPage;
     }
     else {
         amountOfElementsOnPage = smenu->bufferPointsAmount - smenu->page * smenu->maxPoints;
+        smenu->menu->end.Y = smenu->menu->start.Y + amountOfElementsOnPage;
     }
     return amountOfElementsOnPage;
 }
@@ -57,6 +59,7 @@ int runScrollMenu(struct scrollMenu *smenu) {
     updateScrollMenu(smenu);
     int iItem = 0; 
     int isEnable = 1;
+    printHeader(smenu);
     showMenu(smenu->menu, 0);
     while(isEnable) {
         if(GetAsyncKeyState(VK_UP))
@@ -91,13 +94,37 @@ int runScrollMenu(struct scrollMenu *smenu) {
         {
             keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             clearMenu(smenu->menu);
+            clearHeader(smenu);
             return iItem;
         }
         if(GetAsyncKeyState(VK_LEFT)) {
             keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
             isEnable = 0;
             clearMenu(smenu->menu);
+            clearHeader(smenu);
             return -1;
+        }
+    }
+}
+
+void printHeader(struct scrollMenu* smenu) {
+    gotoxy(smenu->menu->start.X - 1, smenu->menu->start.Y - 3);
+    wprintf(L"+");
+    for (int i = smenu->menu->start.X + 1; i < smenu->menu->end.X + 2; i++) wprintf(L"-");
+    wprintf(L"+");
+    gotoxy(smenu->menu->start.X - 1, smenu->menu->start.Y - 2);
+    if (smenu->printStudentsMode == 0) {
+        wprintf(L"|  %6s|%7s|%31s|%11s|%4s|%10s|%10s |", L"Номер", L"Группа", L"ФИО", L"ДР", L"Пол", L"Пропустил", L"Оправдал");
+    } else {
+        wprintf(L"|  %6s|%7s|%31s|%20s|", L"Номер", L"Группа", L"ФИО", L"Неоправдано часов");
+    }
+}
+
+void clearHeader(struct scrollMenu* smenu) {
+    for (int y = smenu->menu->start.Y - 3; y < smenu->menu->end.Y + 1; y++) {
+        gotoxy(smenu->menu->start.X - 1, y);
+        for (int x = smenu->menu->start.X - 1; x < smenu->menu->end.X+2; x++) {
+            wprintf(L" ");
         }
     }
 }

@@ -11,7 +11,8 @@ struct menu* getMenu(int _pointsAmount, COORD _start, COORD _end, WCHAR **_point
     return menu;
 }
 
-void showMenu(struct menu *menu, int choice) {  
+void showMenu(struct menu *menu, int choice) {
+    printMenuBorders(menu->start, menu->end);  
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     int x = menu->start.X;
     int y = menu->start.Y;
@@ -74,7 +75,6 @@ int runMenu(struct menu *menu) {
 int runSubMenu(struct menu *menu) {
     int iItem = 0;
     int isEnable = 1;
-
     showMenu(menu, iItem);
 
     while(isEnable) {
@@ -111,10 +111,36 @@ int runSubMenu(struct menu *menu) {
 }
 
 void clearMenu(struct menu* menu) {
-    for (int y = menu->start.Y; y < menu->end.Y; y++) {
-        gotoxy(menu->start.X, y);
-        for (int x = menu->start.X; x < menu->end.X; x++) {
+    for (int y = menu->start.Y-1; y < menu->end.Y+1; y++) {
+        gotoxy(menu->start.X-1, y);
+        for (int x = menu->start.X-1; x < menu->end.X+2; x++) {
             wprintf(L" ");
         }
     }
+}
+
+void printMenuBorders(COORD start, COORD end) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 1);
+    
+    gotoxy(start.X-1, start.Y-1);
+    wprintf(L"+");
+    for(int i = start.X-1; i < end.X; i++) {
+        wprintf(L"-");
+    }
+    wprintf(L"+");
+
+    for(int i = start.Y; i < end.Y; i++) {
+        gotoxy(start.X - 1, i);
+        wprintf(L"|");
+        gotoxy(end.X + 1, i);
+        wprintf(L"|");
+    }
+
+    gotoxy(start.X-1, end.Y);
+    wprintf(L"+");
+    for(int i = start.X-1; i < end.X; i++) {
+        wprintf(L"-");
+    }
+    wprintf(L"+");
 }

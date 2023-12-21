@@ -5,8 +5,8 @@ struct studentMenu* getStudentMenu(struct student *_student) {
     menu->menu.choice = 0;
     menu->menu.pointsAmount = 7;
     COORD start, end;
-    start.X = 23; start.Y = 2;
-    end.X = 123; end.Y = 12;
+    start.X = 25; start.Y = 2;
+    end.X = start.X + 31; end.Y = start.Y + menu->menu.pointsAmount;
     menu->menu.start = start;
     menu->menu.end = end;
 
@@ -35,9 +35,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR number[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(number);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             menu->student->number = _wtoi(number);
             updateStudentMenu(menu);
@@ -51,9 +51,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR group[6];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
-                _getws(group);              
+                _getws(group);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);              
             }
             wcscpy(menu->student->group, group);
             updateStudentMenu(menu);
@@ -66,10 +66,10 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
             
             WCHAR FIO[30];
-            while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+            while (!GetAsyncKeyState(VK_RETURN)) {    
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(FIO);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             wcscpy(menu->student->FIO, FIO);
             updateStudentMenu(menu);      
@@ -83,9 +83,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR birthday[11];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(birthday);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             wcscpy(menu->student->birthday, birthday);
             updateStudentMenu(menu);
@@ -99,9 +99,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR gender[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(gender);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             menu->student->gender = _wtoi(gender);
             updateStudentMenu(menu);
@@ -115,9 +115,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR missedHours[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(missedHours);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             menu->student->missedHours = _wtoi(missedHours);
             updateStudentMenu(menu);
@@ -131,9 +131,9 @@ void changeStudentMenu(struct studentMenu* menu, int item) {
             
             WCHAR justifiedHours[10];
             while (!GetAsyncKeyState(VK_RETURN)) {
-                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
                 gotoxy(menu->menu.start.X + 19, menu->menu.start.Y + item);
                 _getws(justifiedHours);
+                keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
             }
             menu->student->justifiedHours = _wtoi(justifiedHours);
             updateStudentMenu(menu);

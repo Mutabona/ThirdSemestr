@@ -27,5 +27,6 @@ void printItem(struct menu *menu, int item);
 int runMenu(struct menu *menu);
 void clearMenu(struct menu* menu);
 int runSubMenu(struct menu *menu);
+void printMenuBorders(COORD start, COORD end);
 
 #endif

@@ -18,5 +18,7 @@ struct scrollMenu* getScrollMenu(struct student* buffer, int _pointsAmount, int 
 void updateScrollMenu(struct scrollMenu* smenu);
 int runScrollMenu(struct scrollMenu *menu);
 int getAmountOfElementsOnPage(struct scrollMenu *smenu);
+void printHeader(struct scrollMenu* smenu);
+void clearHeader(struct scrollMenu* smenu);
 
 #endif

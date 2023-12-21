@@ -8,14 +8,14 @@
 
 struct node {
     struct student student;
-    size_t height;
+    int height;
     struct node* left;
     struct node* right;
 };
 
 struct node* addNode(struct node* node, struct student student);
 int getStudents(struct node* node, struct student* students, int i);
-size_t height(struct node* node);
+int height(struct node* node);
 int balanceFactor(struct node* p);
 void fixHeight(struct node* node);
 struct node* rotateRight(struct node* p);

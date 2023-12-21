@@ -30,5 +30,6 @@ char* getFileName(struct UI* ui);
 int initFileMenu(struct UI* ui);
 int initBadStudentsMenu(struct UI* ui);
 void freeUI(struct UI *ui);
+int initScrollMenuForSearch(struct UI* ui);
 
 #endif

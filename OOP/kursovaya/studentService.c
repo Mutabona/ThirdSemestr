@@ -26,16 +26,17 @@ struct studentService* getStudentService() {
 }
 
 void fillStudentRepository(struct studentService* studentService) {
-    int amount = 18;
+    int amount = 180;
     struct student* students = generateStudents(amount);
     for (int i = 0; i < amount; i++) {
         addStudent(studentService, students[i]);
     }
+    printf("Test students loaded\n");
 }
 
 struct student* getStudentsByFIO(struct studentService* studentService, WCHAR FIO[30]) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByFIO(studentService->studentRepository, students, 0, FIO);
     studentService->lastFoundStudentsAmount = foundStudents;   
     if (!foundStudents) return NULL; 
@@ -50,7 +51,7 @@ struct student* getStudentByNumber(struct studentService* studentService, int nu
 
 struct student* getStudentsByGroup(struct studentService* studentService, WCHAR group[6]) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByGroup(studentService->studentRepository, students, 0, group);
     studentService->lastFoundStudentsAmount = foundStudents;
     if (!foundStudents) return NULL;
@@ -59,7 +60,7 @@ struct student* getStudentsByGroup(struct studentService* studentService, WCHAR 
 
 struct student* getStudentsByBirthday(struct studentService* studentService, WCHAR birthday[11]) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByBirthday(studentService->studentRepository, students, 0, birthday);
     studentService->lastFoundStudentsAmount = foundStudents;
     if (!foundStudents) return NULL;
@@ -68,7 +69,7 @@ struct student* getStudentsByBirthday(struct studentService* studentService, WCH
 
 struct student* getStudentsByGender(struct studentService* studentService, int gender) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByGender(studentService->studentRepository, students, 0, gender);
     studentService->lastFoundStudentsAmount = foundStudents;
     if (!foundStudents) return NULL;
@@ -77,7 +78,7 @@ struct student* getStudentsByGender(struct studentService* studentService, int g
 
 struct student* getStudentsByJustifiedHours(struct studentService* studentService, int justifiedHours) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByJustifiedHours(studentService->studentRepository, students, 0, justifiedHours);
     studentService->lastFoundStudentsAmount = foundStudents;
     if (!foundStudents) return NULL;
@@ -86,7 +87,7 @@ struct student* getStudentsByJustifiedHours(struct studentService* studentServic
 
 struct student* getStudentsByMissedHours(struct studentService* studentService, int missedHours) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListByMissedHours(studentService->studentRepository, students, 0, missedHours);
     studentService->lastFoundStudentsAmount = foundStudents;
     if (!foundStudents) return NULL;
@@ -95,10 +96,14 @@ struct student* getStudentsByMissedHours(struct studentService* studentService, 
 
 struct student* getStudentsWithUnjustifiedHours(struct studentService* studentService) {
     if (!studentService->studentRepository) return NULL;
-    struct student* students = (struct student*)malloc(sizeof(struct student));
+    struct student* students = (struct student*)malloc(studentService->studentsAmount * sizeof(struct student));
     int foundStudents = getStudentsListWithUnjustifiedHours(studentService->studentRepository, students, 0);
     studentService->lastFoundStudentsAmount = foundStudents;
-    if (!foundStudents) return NULL;
+    
+    if (!foundStudents) {
+        studentService->lastFoundStudentsAmount = 0;
+        return NULL;
+    }
     return students;
 }
 

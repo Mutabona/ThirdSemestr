@@ -12,8 +12,10 @@ int main() {
     setlocale(LC_ALL, "Russian");
     struct studentService *studentService = getStudentService();
     fillStudentRepository(studentService);
+    printf("Student service loaded\n");
     struct UI *ui = getUI(studentService);
-    runUI(ui);
+    printf("UI loaded");
+    runUI(ui);   
     freeStudents(studentService);
     return 0;
 }

@@ -6,7 +6,7 @@
 #include "studentService.h"
 
 struct scrollMenu {
-    struct menu menu;
+    struct menu* menu;
     struct student* buffer;
     int bufferPointsAmount;
     int maxPoints;

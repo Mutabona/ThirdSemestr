@@ -5,6 +5,10 @@ struct node* addNode(struct node* node, struct student student) {
         node = (struct node*)malloc(sizeof(struct node));
         node->student = student;
         node->height = 1;
+        node->right = NULL;
+        node->left = NULL;
+        printf("Student number %d loaded\n", node->student.number);
+        return node;
     }
     else if (student.number < node->student.number) {
         node->left = addNode(node->left, student);
@@ -23,7 +27,7 @@ int getStudents(struct node* node, struct student* students, int i) {
     return i;
 }
 
-size_t height(struct node* node) {
+int height(struct node* node) {
 	return node?node->height:0;
 }
 
@@ -32,8 +36,8 @@ int balanceFactor(struct node* p) {
 }
 
 void fixHeight(struct node* node) {
-	unsigned char hl = height(node->left);
-	unsigned char hr = height(node->right);
+	int hl = height(node->left);
+	int hr = height(node->right);
 	node->height = (hl>hr?hl:hr)+1;
 }
 
@@ -182,7 +186,7 @@ int getStudentsListWithUnjustifiedHours(struct node* node, struct student* stude
     if (!node) return i;
     i = getStudentsListWithUnjustifiedHours(node->left, students, i);
     if (node->student.missedHours > node->student.justifiedHours) {
-        students = (struct student*)realloc(students, sizeof(struct student)*(i+1));
+        students = (struct student*)realloc(students, (i+1) * sizeof(struct student));
         students[i++] = node->student;
     }
     i = getStudentsListWithUnjustifiedHours(node->right, students, i);

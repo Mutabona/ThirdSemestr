@@ -32,8 +32,8 @@ WCHAR* random_date() {
 struct student random_student() {
     struct student result; 
     result.number = rand() % 100 + 1; 
-    wcscpy(result.group, random_string(L"ABCD", 2)); 
-    wcscat(result.group, random_string(L"0123456789", 3)); 
+    wcscpy(result.group, random_string(L"it", 2)); 
+    wcscat(result.group, random_string(L"12345678", 1)); 
     wcscpy(result.FIO, random_string(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1)); 
     wcscat(result.FIO, random_string(L"abcdefghijklmnopqrstuvwxyz", rand() % 10 + 3)); 
     wcscat(result.FIO, random_string(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1)); 
